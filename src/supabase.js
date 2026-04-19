@@ -1,15 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 
-// These values come from environment variables set in Vercel.
-// For local development, create a .env file (see .env.example).
-const SUPABASE_URL  = import.meta.env.VITE_SUPABASE_URL
-const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://ctzaaewdoanqvfojcdkt.supabase.co'
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImN0emFhZXdkb2FucXZmb2pjZGt0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzMzUzMTgsImV4cCI6MjA4NjkxMTMxOH0.HzoRd2YQ0OT05Mgp4hfkmE0pwr_rm-dF0DDaHgNvUHQ'
 
-if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-  console.warn('Supabase env vars missing. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY to your .env file or Vercel settings.')
-}
-
-export const supabase = createClient(
-  SUPABASE_URL  || 'https://placeholder.supabase.co',
-  SUPABASE_ANON_KEY || 'placeholder'
-)
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
