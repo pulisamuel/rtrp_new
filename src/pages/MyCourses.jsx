@@ -50,8 +50,9 @@ const COURSE_URLS = {
   da4: 'https://www.coursera.org/learn/excel-data-analysis',
 }
 
-function CourseProgressCard({ course, progress, onVerify }) {
+function CourseProgressCard({ course, progress, onVerify, onRemove }) {
   const [showCertUpload, setShowCertUpload] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
   const [certFile, setCertFile]             = useState(null)
   const [certPreview, setCertPreview]       = useState(null)
   const [verifying, setVerifying]           = useState(false)
@@ -198,21 +199,61 @@ function CourseProgressCard({ course, progress, onVerify }) {
       )}
 
       {isCompleted && (
-        <div className="p-4 bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/20 rounded-xl text-center animate-fade-in">
+        <div className="p-4 bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/20 rounded-xl text-center animate-fade-in relative overflow-hidden group">
           <p className="text-2xl mb-1">🏆</p>
           <p className="font-extrabold text-green-400 text-sm">Course Completed!</p>
           <p className="text-green-400/60 text-xs mt-1">Certificate verified · Skill added to your profile</p>
+          
+          <button 
+            onClick={() => setShowDeleteConfirm(true)}
+            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-2 text-red-400 hover:bg-red-500/10 rounded-lg"
+          >
+            🗑️
+          </button>
         </div>
+      )}
+
+      {/* Delete/Remove confirmation */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-gray-900 border border-white/10 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 className="text-lg font-bold text-white mb-2 text-center">Remove Course?</h3>
+            <p className="text-slate-400 text-sm text-center mb-6">
+              This will remove <span className="text-white font-semibold font-mono">{course.title}</span> from your learning dashboard.
+            </p>
+            <div className="flex gap-3">
+              <button onClick={() => setShowDeleteConfirm(false)} className="flex-1 py-2 rounded-xl bg-white/5 text-slate-400 hover:bg-white/10 font-semibold transition-all">Cancel</button>
+              <button 
+                onClick={() => { onRemove(course.id); setShowDeleteConfirm(false) }}
+                className="flex-1 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold transition-all shadow-lg shadow-red-500/20"
+                >Remove</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Add a general remove button for non-completed courses too */}
+      {!isCompleted && (
+        <button 
+          onClick={() => setShowDeleteConfirm(true)}
+          className="mt-2 w-full py-1.5 text-[10px] uppercase font-bold tracking-widest text-slate-600 hover:text-red-400 transition-colors"
+        >
+          Remove course from dashboard
+        </button>
       )}
     </div>
   )
 }
 
 export default function MyCourses() {
-  const { enrolledCourses, courseProgress, updateProgress } = useApp()
+  const { enrolledCourses, courseProgress, updateProgress, removeCourse } = useApp()
 
   const handleVerify = (courseId) => {
     updateProgress(courseId, 100)
+  }
+
+  const handleRemove = (courseId) => {
+    removeCourse(courseId)
   }
 
   const completed = enrolledCourses.filter(c => (courseProgress[c.id] || 0) === 100)
@@ -295,7 +336,7 @@ export default function MyCourses() {
               <span className="w-2 h-2 bg-slate-500 rounded-full" /> Not Started ({notStarted.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {notStarted.map(course => <CourseProgressCard key={course.id} course={course} progress={courseProgress[course.id]||0} onVerify={handleVerify} />)}
+              {notStarted.map(course => <CourseProgressCard key={course.id} course={course} progress={courseProgress[course.id]||0} onVerify={handleVerify} onRemove={handleRemove} />)}
             </div>
           </div>
         )}
@@ -305,7 +346,7 @@ export default function MyCourses() {
               <span className="w-2 h-2 bg-yellow-500 rounded-full" /> In Progress ({inProgress.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {inProgress.map(course => <CourseProgressCard key={course.id} course={course} progress={courseProgress[course.id]||0} onVerify={handleVerify} />)}
+              {inProgress.map(course => <CourseProgressCard key={course.id} course={course} progress={courseProgress[course.id]||0} onVerify={handleVerify} onRemove={handleRemove} />)}
             </div>
           </div>
         )}
@@ -315,7 +356,7 @@ export default function MyCourses() {
               <span className="w-2 h-2 bg-green-500 rounded-full" /> Completed ({completed.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {completed.map(course => <CourseProgressCard key={course.id} course={course} progress={courseProgress[course.id]||0} onVerify={handleVerify} />)}
+              {completed.map(course => <CourseProgressCard key={course.id} course={course} progress={courseProgress[course.id]||0} onVerify={handleVerify} onRemove={handleRemove} />)}
             </div>
           </div>
         )}

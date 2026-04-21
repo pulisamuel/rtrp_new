@@ -92,43 +92,31 @@ export default function Profile() {
           ))}
         </div>
 
-        {/* Profile Form */}
+        {/* Profile Card / Info */}
         {activeTab === 'profile' && (
-          <div className="card animate-fade-in">
-            <h3 className="font-bold text-white mb-5 text-sm">Personal Information</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="card animate-fade-in space-y-6">
+            <div className="flex items-center justify-between">
+              <h3 className="font-bold text-white text-base">Account Information</h3>
+              <div className="badge bg-green-500/10 text-green-400 border-green-500/20 px-3 py-1">Verified Profile</div>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
               {[
-                { field:'name',    label:'Full Name *',          type:'text',  placeholder:'Your full name' },
-                { field:'email',   label:'Email Address *',      type:'email', placeholder:'your@email.com' },
-                { field:'college', label:'College / University *',type:'text', placeholder:'e.g. IIT Delhi, VIT' },
-              ].map(({ field, label, type, placeholder }) => (
-                <div key={field} className={field === 'college' ? 'md:col-span-2' : ''}>
-                  <label className="block text-xs font-semibold text-slate-400 mb-1.5">{label}</label>
-                  <input type={type} value={form[field]} onChange={e => handleChange(field, e.target.value)}
-                    placeholder={placeholder} className="input-field" />
+                { label: 'Full Name', value: form.name, icon: '👤' },
+                { label: 'Email Address', value: form.email, icon: '📧' },
+                { label: 'Educational Institution', value: form.college, icon: '🎓', fullWidth: true },
+                { label: 'Current Level', value: form.year, icon: '📅' },
+                { label: 'Graduation Class', value: form.graduation, icon: '🎓' },
+                { label: 'Career Objective', value: form.goal, icon: '🎯', fullWidth: true },
+              ].map(({ label, value, icon, fullWidth }) => (
+                <div key={label} className={fullWidth ? 'md:col-span-2' : ''}>
+                  <p className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-1">{label}</p>
+                  <div className="flex items-center gap-3 p-3.5 bg-white/3 border border-white/5 rounded-2xl group hover:border-white/10 transition-colors">
+                    <span className="text-lg opacity-60 group-hover:opacity-100 transition-opacity">{icon}</span>
+                    <span className="font-semibold text-slate-200">{value || 'Not provided'}</span>
+                  </div>
                 </div>
               ))}
-              <div>
-                <label className="block text-xs font-semibold text-slate-400 mb-1.5">Current Year *</label>
-                <select value={form.year} onChange={e => handleChange('year', e.target.value)} className="input-field">
-                  <option value="">Select year</option>
-                  {YEAR_OPTIONS.map(y => <option key={y} value={y}>{y}</option>)}
-                </select>
-              </div>
-              <div>
-                <label className="block text-xs font-semibold text-slate-400 mb-1.5">Graduation Year *</label>
-                <select value={form.graduation} onChange={e => handleChange('graduation', e.target.value)} className="input-field">
-                  <option value="">Select year</option>
-                  {GRAD_OPTIONS.map(y => <option key={y} value={y}>{y}</option>)}
-                </select>
-              </div>
-              <div className="md:col-span-2">
-                <label className="block text-xs font-semibold text-slate-400 mb-1.5">Career Goal *</label>
-                <select value={form.goal} onChange={e => handleChange('goal', e.target.value)} className="input-field">
-                  <option value="">Select your goal</option>
-                  {GOAL_OPTIONS.map(g => <option key={g} value={g}>{g}</option>)}
-                </select>
-              </div>
             </div>
 
             {profileCompletion < 6 && (
@@ -145,15 +133,10 @@ export default function Profile() {
               </div>
             )}
 
-            <div className="mt-5 flex gap-3">
-              <button onClick={handleSave}
-                className={`flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200
-                  ${saved ? 'bg-green-500/20 text-green-400 border border-green-500/20' : 'btn-primary'}`}>
-                {saved ? <><CheckCircle className="w-4 h-4" /> Saved!</> : <><Save className="w-4 h-4" /> Save Profile</>}
-              </button>
+            <div className="mt-8 flex gap-3">
               {form.goal && (
-                <Link to="/analyze" className="btn-secondary flex-1 justify-center text-xs">
-                  Analyze for {form.goal} →
+                <Link to="/analyze" className="btn-primary flex-1 justify-center py-4">
+                  Analyze Resume for {form.goal} →
                 </Link>
               )}
             </div>

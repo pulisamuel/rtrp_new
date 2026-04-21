@@ -290,9 +290,45 @@ export async function extractTextFromPDF(file) {
 // Analyze resume text against job role
 export function analyzeResume(resumeText, jobRole) {
   const text = resumeText.toLowerCase()
-  const roleData = JOB_ROLES[jobRole]
+  let roleData = JOB_ROLES[jobRole]
 
-  if (!roleData) return null
+  // Fallback for custom job roles
+  if (!roleData) {
+    // Generate a basic dynamic profile based on the title
+    const keywords = jobRole.toLowerCase().split(/[\s/-]+/).filter(w => w.length > 2)
+    roleData = {
+      requiredSkills: keywords.slice(0, 5).map(w => w.charAt(0).toUpperCase() + w.slice(1)),
+      niceToHave: [],
+      experienceKeywords: keywords,
+      minExperienceYears: 1,
+      description: `Analysis for ${jobRole} (Custom Role)`
+    }
+  }
+
+  // Create a flat list of all available courses for 1:1 mapping
+  const ALL_COURSES = Object.values(COURSES_DB).flat()
+  
+  function getCourseForSkill(skillName, roleName) {
+    // 1. Try to find a course that mentions this exact skill in its 'skill' field
+    const directMatch = ALL_COURSES.find(c => 
+      c.skill.toLowerCase() === skillName.toLowerCase() || 
+      skillName.toLowerCase().includes(c.skill.toLowerCase())
+    )
+    if (directMatch) return directMatch
+
+    // 2. Try to find a course that includes the skill in its title
+    const titleMatch = ALL_COURSES.find(c => 
+      c.title.toLowerCase().includes(skillName.toLowerCase())
+    )
+    if (titleMatch) return titleMatch
+
+    // 3. Fallback to a role-specific course if possible
+    const roleCourses = COURSES_DB[roleName] || []
+    if (roleCourses.length > 0) return roleCourses[0]
+
+    // 4. Final fallback to any course
+    return ALL_COURSES[0]
+  }
 
   // Check required skills
   const foundRequired = roleData.requiredSkills.filter(skill =>
@@ -371,7 +407,7 @@ export function analyzeResume(resumeText, jobRole) {
       niceToHave: Math.round(niceToHaveScore),
       experience: Math.round(experienceScore + yearsScore),
     },
-    courses: COURSES_DB[jobRole] || [],
+    courses: missingRequired.map(skill => getCourseForSkill(skill, jobRole)),
     roleDescription: roleData.description,
   }
 }

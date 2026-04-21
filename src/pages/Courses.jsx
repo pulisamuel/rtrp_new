@@ -124,11 +124,24 @@ export default function Courses() {
   const [toast, setToast] = useState('')
 
   const courses = COURSES_DB[selectedRole] || []
+  
+  // Custom logic to only show/prioritize courses matching current analysis gaps
+  const recommendedCourses = analysisResult?.courses || []
+  
   const filtered = courses.filter(c => {
     const matchFilter = filter === 'All' || c.level === filter || (filter === 'Free' && c.free)
     const matchSearch = c.title.toLowerCase().includes(search.toLowerCase()) || c.skill.toLowerCase().includes(search.toLowerCase())
     return matchFilter && matchSearch
   })
+
+  // Final list: if we are looking at the role we analyzed, show ONLY the recommended ones (1:1 with gaps)
+  // otherwise show the full grid for that role.
+  const displayCourses = (analysisResult && selectedRole === analysisResult.jobRole)
+    ? recommendedCourses.filter(c => {
+        const matchSearch = c.title.toLowerCase().includes(search.toLowerCase()) || c.skill.toLowerCase().includes(search.toLowerCase())
+        return matchSearch
+      })
+    : filtered
 
   const handleEnroll = (course) => {
     enrollCourse(course)
@@ -200,9 +213,9 @@ export default function Courses() {
         )}
 
         {/* Courses Grid */}
-        {filtered.length > 0 ? (
+        {displayCourses.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 stagger-children">
-            {filtered.map(course => (
+            {displayCourses.map(course => (
               <CourseCard key={course.id} course={course}
                 enrolled={enrolledCourses.some(c => c.id === course.id)} onEnroll={handleEnroll} />
             ))}

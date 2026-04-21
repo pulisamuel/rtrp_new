@@ -41,15 +41,12 @@ function validateJobRole(input) {
   if (!trimmed) return { valid: false, message: 'Please enter a job role' }
   if (trimmed.length < 2) return { valid: false, message: 'Job role is too short' }
   if (trimmed.length > 60) return { valid: false, message: 'Job role is too long' }
+  
+  // Always valid if length is okay
   const exact = ALL_ROLES.find(r => r.toLowerCase() === trimmed.toLowerCase())
   if (exact) return { valid: true, matched: exact, message: '' }
-  const alias = ROLE_ALIASES[trimmed.toLowerCase()]
-  if (alias) return { valid: true, matched: alias, message: '', aliasOf: alias }
-  const partial = ALL_ROLES.find(r => r.toLowerCase().includes(trimmed.toLowerCase()) || trimmed.toLowerCase().includes(r.toLowerCase()))
-  if (partial) return { valid: true, matched: partial, message: '', suggestion: partial }
-  const aliasEntry = Object.entries(ROLE_ALIASES).find(([a]) => a.includes(trimmed.toLowerCase()) || trimmed.toLowerCase().includes(a.split(' ')[0]))
-  if (aliasEntry) return { valid: true, matched: aliasEntry[1], message: '', suggestion: aliasEntry[1] }
-  return { valid: false, declined: true, message: `"${trimmed}" is not a supported role. Pick from the 20 below.` }
+  
+  return { valid: true, matched: trimmed, message: '' }
 }
 
 export default function Analyze() {
@@ -58,7 +55,6 @@ export default function Analyze() {
   
   const initialJobDesc = location.state?.jobDesc || ''
 
-  const [file, setFile]                   = useState(null)
   const [jobRole, setJobRole]             = useState('')
   const [roleInput, setRoleInput]         = useState(initialJobDesc)
   const [roleSuggestions, setRoleSuggestions] = useState([])
@@ -70,7 +66,10 @@ export default function Analyze() {
   const [dragOver, setDragOver]           = useState(false)
   const [step, setStep]                   = useState(1)
   const fileRef = useRef()
-  const { setAnalysisResult } = useApp()
+  const { setAnalysisResult, storedResumeText, storedResumeName, setStoredResume } = useApp()
+
+  // Initialize with stored resume if available
+  const [file, setFile] = useState(storedResumeName ? { name: storedResumeName, isStored: true } : null)
 
   React.useEffect(() => {
     if (initialJobDesc) {
@@ -120,24 +119,39 @@ export default function Analyze() {
 
   const handleFile = async (f) => {
     if (!f) return
-    const { validatePDFFile } = await import('../utils/pdfUploader')
+    const { validatePDFFile, processResumeFile } = await import('../utils/pdfUploader')
     const check = await validatePDFFile(f)
-    if (!check.valid) { setError(`❌ ${check.error}`); setFile(null); return }
+    if (!check.valid) { setError(`❌ ${check.error}`); return }
+    
+    setLoading(true); setLoadingStep('Reading resume...')
+    const processed = await processResumeFile(f)
+    if (!processed.success) { setError(`❌ ${processed.error}`); setLoading(false); return }
+    
+    await setStoredResume(processed.text, f.name)
     setFile(f); setError(''); setStep(s => Math.max(s, 2))
+    setLoading(false); setLoadingStep('')
   }
 
   const handleAnalyze = async () => {
-    if (!file) { setError('Please upload your resume'); return }
+    if (!storedResumeText && !file) { setError('Please upload your resume'); return }
     const validation = validateJobRole(roleInput)
     if (!validation.valid) { setError(validation.message); return }
-    setLoading(true); setError(''); setLoadingStep('Reading PDF...')
+    
+    setLoading(true); setError(''); setLoadingStep('Preparing analysis...')
     try {
-      const { processResumeFile } = await import('../utils/pdfUploader')
-      const processed = await processResumeFile(file)
-      if (!processed.success) { setError(`❌ ${processed.error}`); return }
+      let textToAnalyze = storedResumeText
+      if (!textToAnalyze && file && !file.isStored) {
+          // This case should theoretically be handled by handleFile setting storedResumeText
+          // but we add a safety check
+          const { processResumeFile } = await import('../utils/pdfUploader')
+          const processed = await processResumeFile(file)
+          if (!processed.success) throw new Error(processed.error)
+          textToAnalyze = processed.text
+      }
+
       setLoadingStep('Analyzing resume...')
       const { analyzeResumeViaAPI } = await import('../utils/analysisApi')
-      const { result } = await analyzeResumeViaAPI(processed.text, validation.matched)
+      const { result } = await analyzeResumeViaAPI(textToAnalyze, validation.matched)
       setLoadingStep('Saving results...')
       await setAnalysisResult(result)
       navigate('/dashboard')
@@ -211,9 +225,9 @@ export default function Analyze() {
                   <FileText className="w-7 h-7 text-green-400" />
                 </div>
                 <p className="font-bold text-green-400">{file.name}</p>
-                <p className="text-sm text-slate-500">{(file.size / 1024).toFixed(1)} KB · Ready to analyze</p>
+                <p className="text-sm text-slate-500">{file.isStored ? 'Persisted Resume' : `${(file.size / 1024).toFixed(1)} KB`} · Ready to analyze</p>
                 <button className="text-xs text-slate-500 hover:text-red-400 transition-colors"
-                  onClick={e => { e.stopPropagation(); setFile(null); setStep(1) }}>Remove file</button>
+                  onClick={e => { e.stopPropagation(); setFile(null); setStoredResume('', ''); setStep(1) }}>Change resume</button>
               </div>
             ) : (
               <div className="space-y-3">
@@ -236,7 +250,7 @@ export default function Analyze() {
             <span className="w-6 h-6 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center text-xs font-bold">2</span>
             Target Job Role
           </h2>
-          <p className="text-slate-500 text-xs mb-4 ml-8">Type a job title — 20 supported roles</p>
+          <p className="text-slate-500 text-xs mb-4 ml-8">Type your dream job title</p>
 
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 z-10" />
@@ -284,23 +298,6 @@ export default function Analyze() {
               </span>
             </div>
           )}
-
-          {/* Role chips */}
-          <div className="mt-4">
-            <p className="text-xs text-slate-600 mb-2">All 20 supported roles:</p>
-            <div className="flex flex-wrap gap-1.5">
-              {ALL_ROLES.map(role => (
-                <button key={role} onMouseDown={() => selectRole(role)}
-                  className={`flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all duration-200 border
-                    ${jobRole === role
-                      ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white border-transparent shadow-md'
-                      : 'bg-white/5 text-slate-400 border-white/10 hover:border-blue-400/50 hover:text-white hover:bg-white/10'}`}>
-                  <span>{ROLE_ICONS[role] || '💼'}</span>
-                  {role}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Error */}

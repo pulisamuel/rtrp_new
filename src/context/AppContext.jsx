@@ -22,6 +22,8 @@ export const AppProvider = ({ children }) => {
   const [analysisHistory, setAnalysisHistoryState] = useState([])
   const [enrolledCourses, setEnrolledCoursesState] = useState([])
   const [courseProgress, setCourseProgressState] = useState({})
+  const [storedResumeText, setStoredResumeText] = useState('')
+  const [storedResumeName, setStoredResumeName] = useState('')
 
   // ── Listen to Supabase auth state ──────────────────────────────────────────
   useEffect(() => {
@@ -74,6 +76,8 @@ export const AppProvider = ({ children }) => {
         setAnalysisHistoryState(Array.isArray(data.analysis_history) ? data.analysis_history : [])
         setEnrolledCoursesState(Array.isArray(data.enrolled_courses) ? data.enrolled_courses : [])
         setCourseProgressState(data.course_progress || {})
+        setStoredResumeText(data.resume_text || '')
+        setStoredResumeName(data.resume_name || '')
       }
     } catch (err) {
       console.error('Error loading user data:', err)
@@ -88,6 +92,8 @@ export const AppProvider = ({ children }) => {
     setAnalysisHistoryState([])
     setEnrolledCoursesState([])
     setCourseProgressState({})
+    setStoredResumeText('')
+    setStoredResumeName('')
   }
 
   // ── Save a field to Supabase ───────────────────────────────────────────────
@@ -147,6 +153,13 @@ export const AppProvider = ({ children }) => {
     await saveField('analysis_history', newHistory)
   }
 
+  const setStoredResume = async (text, name) => {
+    setStoredResumeText(text)
+    setStoredResumeName(name)
+    await saveField('resume_text', text)
+    await saveField('resume_name', name)
+  }
+
   const enrollCourse = async (course) => {
     if (enrolledCourses.find(c => c.id === course.id)) return
     const newCourses = [...enrolledCourses, { ...course, enrolledAt: new Date().toISOString() }]
@@ -163,6 +176,16 @@ export const AppProvider = ({ children }) => {
     await saveField('course_progress', newProgress)
   }
 
+  const removeCourse = async (courseId) => {
+    const newCourses = enrolledCourses.filter(c => c.id !== courseId)
+    const newProgress = { ...courseProgress }
+    delete newProgress[courseId]
+    setEnrolledCoursesState(newCourses)
+    setCourseProgressState(newProgress)
+    await saveField('enrolled_courses', newCourses)
+    await saveField('course_progress', newProgress)
+  }
+
   return (
     <AppContext.Provider value={{
       supabaseUser, authLoading, dataLoading, isAuthenticated,
@@ -171,7 +194,8 @@ export const AppProvider = ({ children }) => {
       analysisResult, setAnalysisResult,
       analysisHistory,
       enrolledCourses, courseProgress,
-      enrollCourse, updateProgress,
+      enrollCourse, updateProgress, removeCourse,
+      storedResumeText, storedResumeName, setStoredResume,
     }}>
       {children}
     </AppContext.Provider>
