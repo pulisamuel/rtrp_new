@@ -58,6 +58,15 @@
            focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/40
            transition-all duration-200 text-sm;
   }
+  select.input-field {
+    color-scheme: dark;
+    background-color: #1e293b;
+  }
+  select.input-field option {
+    background-color: #1e293b;
+    color: #f1f5f9;
+    padding: 8px;
+  }
 
   /* ── Badges ───────────────────────────────────────────────────────────── */
   .badge {

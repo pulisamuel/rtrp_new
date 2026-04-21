@@ -12,11 +12,33 @@ const FEATURES = [
 
 const YEARS    = ['1st Year','2nd Year','3rd Year','4th Year','Graduate','Post Graduate']
 const GRAD_YRS = ['2024','2025','2026','2027','2028','2029','2030']
-const GOALS    = [
-  'Frontend Developer','Backend Developer','Full Stack Developer','Data Scientist',
-  'Data Analyst','DevOps Engineer','UI/UX Designer','Machine Learning Engineer',
-  'Cybersecurity Analyst','Product Manager','Cloud Engineer','Mobile Developer',
-  'QA Engineer','AI Engineer','Blockchain Developer','Solutions Architect',
+const GOALS = [
+  // Software Engineering
+  'Frontend Developer','Backend Developer','Full Stack Developer',
+  'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
+  'Software Engineer','Embedded Systems Engineer','Game Developer',
+  // Data & AI
+  'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
+  'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
+  'Deep Learning Researcher','Quantitative Analyst',
+  // Cloud & DevOps
+  'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
+  'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
+  // Security
+  'Cybersecurity Analyst','Penetration Tester','Security Engineer',
+  'Information Security Manager','SOC Analyst',
+  // Design & Product
+  'UI/UX Designer','Product Designer','Interaction Designer',
+  'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
+  // Architecture & Leadership
+  'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
+  'Engineering Manager','Tech Lead',
+  // Other Tech Roles
+  'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
+  'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
+  'IT Consultant','Technical Writer','Developer Advocate',
+  // Non-Tech Adjacent
+  'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer',
 ]
 
 export default function Login() {
@@ -115,9 +137,9 @@ export default function Login() {
             <p className="text-xs text-blue-200/60 leading-relaxed">
               Real accounts · Data synced across devices · Each user gets their own private dashboard
             </p>
-            <div className="mt-3 pt-3 border-t border-white/10">
-              <p className="text-xs text-yellow-300 font-medium">⚙️ Setup required</p>
-              <p className="text-xs text-blue-200/50 mt-0.5">Add your Supabase URL and key to <code className="bg-white/10 px-1 rounded">src/supabase.js</code></p>
+            <div className="mt-3 pt-3 border-t border-white/10 flex items-center gap-2">
+              <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse flex-shrink-0" />
+              <p className="text-xs text-green-300 font-medium">Database connected</p>
             </div>
           </div>
         </div>
@@ -228,11 +250,19 @@ export default function Login() {
                   </select>
                 </div>
                 <div className="col-span-2">
-                  <label className="block text-xs font-semibold text-slate-400 mb-1.5">Career Goal</label>
-                  <select value={form.goal} onChange={e => set('goal', e.target.value)} className="input-field">
-                    <option value="">Select your goal (optional)</option>
-                    {GOALS.map(g => <option key={g}>{g}</option>)}
-                  </select>
+                  <label className="block text-xs font-semibold text-slate-400 mb-1.5">Career Goal <span className="text-slate-600 font-normal">(optional — type or pick)</span></label>
+                  <input
+                    type="text"
+                    list="career-goals-list"
+                    value={form.goal}
+                    onChange={e => set('goal', e.target.value)}
+                    placeholder="e.g. Full Stack Developer, Data Scientist..."
+                    className="input-field"
+                    autoComplete="off"
+                  />
+                  <datalist id="career-goals-list">
+                    {GOALS.map(g => <option key={g} value={g} />)}
+                  </datalist>
                 </div>
               </div>
 
