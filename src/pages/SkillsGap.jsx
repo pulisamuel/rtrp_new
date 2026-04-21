@@ -2,28 +2,48 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { JOB_ROLES } from '../utils/resumeAnalyzer'
-import { Target, CheckCircle, XCircle, BookOpen, ArrowLeft } from 'lucide-react'
+import { Target, CheckCircle, XCircle, BookOpen, ArrowLeft, AlertCircle, Zap } from 'lucide-react'
 
-function SkillBar({ skill, found, index }) {
+function SkillGrid({ skills, type }) {
+  if (skills.length === 0) return null;
+  const isReq = type === 'required';
   return (
-    <div className={`flex items-center gap-3 p-3 rounded-xl border transition-all duration-200 hover:scale-[1.01] animate-fade-in
-      ${found ? 'bg-green-500/8 border-green-500/15' : 'bg-red-500/8 border-red-500/15'}`}
-      style={{ animationDelay:`${index*40}ms` }}>
-      <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold flex-shrink-0
-        ${found ? 'bg-green-500/20 text-green-400' : 'bg-red-500/20 text-red-400'}`}>
-        {found ? '✓' : '✗'}
-      </div>
-      <div className="flex-1">
-        <p className={`font-semibold text-sm ${found ? 'text-green-300' : 'text-red-300'}`}>{skill}</p>
-        <p className={`text-xs ${found ? 'text-green-500/70' : 'text-red-500/70'}`}>
-          {found ? 'Found in your resume' : 'Not found — needs improvement'}
-        </p>
-      </div>
-      {!found && (
-        <Link to="/courses" className="text-xs bg-blue-600/20 text-blue-400 border border-blue-500/20 px-3 py-1.5 rounded-lg font-medium hover:bg-blue-600/30 transition-colors flex-shrink-0">
-          Learn →
-        </Link>
-      )}
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      {skills.map((item, index) => (
+        <div key={item.skill} 
+             className={`p-4 rounded-2xl border backdrop-blur-md transition-all duration-300 hover:-translate-y-1 hover:shadow-xl animate-fade-in
+             ${item.found 
+               ? (isReq ? 'bg-green-500/10 border-green-500/20 shadow-green-500/5' : 'bg-blue-500/10 border-blue-500/20 shadow-blue-500/5') 
+               : (isReq ? 'bg-red-500/10 border-red-500/20 shadow-red-500/5' : 'bg-slate-500/10 border-slate-500/20 shadow-slate-500/5')}
+             `}
+             style={{ animationDelay: `${index * 40}ms` }}>
+          <div className="flex items-start justify-between mb-3">
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center
+              ${item.found 
+                  ? (isReq ? 'bg-green-500/20 text-green-400' : 'bg-blue-500/20 text-blue-400')
+                  : (isReq ? 'bg-red-500/20 text-red-500' : 'bg-slate-500/20 text-slate-400')}`}>
+              {item.found ? <CheckCircle className="w-5 h-5"/> : <XCircle className="w-5 h-5"/>}
+            </div>
+            {isReq && !item.found && (
+              <span className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-red-500/20 text-red-400 rounded-full">
+                <AlertCircle className="w-3 h-3"/> Critical
+              </span>
+            )}
+          </div>
+          <h4 className={`font-bold text-base mb-1 ${item.found ? 'text-white' : 'text-slate-300'}`}>{item.skill}</h4>
+          <p className="text-xs text-slate-400 font-medium leading-relaxed mb-4">
+            {item.found 
+              ? 'Excellent! Detected in your resume.' 
+              : (isReq ? 'Highly necessary to learn and improve.' : 'Optional, but gives you an edge.')}
+          </p>
+          {!item.found && (
+            <Link to="/courses" className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors
+              ${isReq ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30' : 'bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white'}`}>
+              Learn Now <ArrowLeft className="w-3 h-3 rotate-180"/>
+            </Link>
+          )}
+        </div>
+      ))}
     </div>
   )
 }
@@ -36,9 +56,9 @@ export default function SkillsGap() {
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
         <div className="text-center max-w-md animate-fade-in space-y-5">
-          <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-4xl mx-auto">🎯</div>
+          <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-4xl mx-auto shadow-2xl">🎯</div>
           <h2 className="text-2xl font-extrabold text-white">No Analysis Yet</h2>
-          <p className="text-slate-400">Analyze your resume first to see your skills gap</p>
+          <p className="text-slate-400">Analyze your resume first to see your targeted skills gap.</p>
           <Link to="/analyze" className="btn-primary">Analyze My Resume →</Link>
         </div>
       </div>
@@ -48,140 +68,112 @@ export default function SkillsGap() {
   const { jobRole, foundRequired, missingRequired, foundNiceToHave, missingNiceToHave, score } = analysisResult
   const roleData = JOB_ROLES[jobRole]
 
-  if (!roleData) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-8">
-        <div className="text-center max-w-md animate-fade-in space-y-4">
-          <div className="text-5xl">⚠️</div>
-          <h2 className="text-xl font-extrabold text-white">Role Not Supported</h2>
-          <p className="text-slate-400">"{jobRole}" doesn't have a detailed skills map. Re-analyze with one of the 20 supported roles.</p>
-          <Link to="/analyze" className="btn-primary">Re-analyze →</Link>
-        </div>
-      </div>
-    )
-  }
+  if (!roleData) return null;
 
-  const allRequired   = [...foundRequired.map(s=>({skill:s,found:true})), ...missingRequired.map(s=>({skill:s,found:false}))]
-  const allNiceToHave = [...foundNiceToHave.map(s=>({skill:s,found:true})), ...missingNiceToHave.map(s=>({skill:s,found:false}))]
+  const allRequired   = [...missingRequired.map(s=>({skill:s,found:false})), ...foundRequired.map(s=>({skill:s,found:true}))]
+  const allNiceToHave = [...missingNiceToHave.map(s=>({skill:s,found:false})), ...foundNiceToHave.map(s=>({skill:s,found:true}))]
   const requiredPct   = Math.round((foundRequired.length / roleData.requiredSkills.length) * 100)
   const bonusPct      = Math.round((foundNiceToHave.length / roleData.niceToHave.length) * 100)
 
   return (
     <div className="page-wrapper animate-fade-in">
+      {/* Background flair */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/6 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-blue-600/10 rounded-full blur-[100px]" />
       </div>
 
-      <div className="max-w-4xl mx-auto relative">
-        <div className="page-header">
-          <div className="section-label"><Target className="w-3.5 h-3.5 text-purple-400" /> Skill Analysis</div>
-          <h1 className="page-title">Skills Gap Analysis</h1>
-          <p className="page-subtitle">Detailed breakdown for <span className="text-blue-400 font-semibold">{jobRole}</span></p>
-        </div>
-
-        {/* Overview Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div className="card bg-gradient-to-br from-blue-600/20 to-purple-600/20 border-blue-500/20">
-            <p className="text-blue-300/70 text-xs font-medium">Overall Score</p>
-            <p className="text-4xl font-extrabold text-white mt-1">{score}%</p>
-            <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" style={{ width:`${score}%` }} />
+      <div className="max-w-6xl mx-auto relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
+          <div>
+            <div className="section-label bg-purple-500/10 text-purple-300 border-purple-500/20">
+              <Zap className="w-3.5 h-3.5 text-purple-400" /> Deep Skill Analysis
             </div>
+            <h1 className="text-4xl font-black text-white tracking-tight mb-2">Skills Gap Report</h1>
+            <p className="text-slate-400">We mapped your resume against the industry standard requirements for <span className="text-blue-400 font-bold bg-blue-400/10 px-2 py-0.5 rounded ml-1">{jobRole}</span>.</p>
           </div>
-          <div className="card">
-            <p className="text-slate-500 text-xs font-medium">Required Skills</p>
-            <p className="text-4xl font-extrabold text-white mt-1">{requiredPct}%</p>
-            <p className="text-xs text-slate-500 mt-1">{foundRequired.length} of {roleData.requiredSkills.length} found</p>
-            <div className="mt-3 h-1.5 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-blue-500 rounded-full transition-all duration-1000" style={{ width:`${requiredPct}%` }} />
-            </div>
-          </div>
-          <div className="card">
-            <p className="text-slate-500 text-xs font-medium">Bonus Skills</p>
-            <p className="text-4xl font-extrabold text-white mt-1">{bonusPct}%</p>
-            <p className="text-xs text-slate-500 mt-1">{foundNiceToHave.length} of {roleData.niceToHave.length} found</p>
-            <div className="mt-3 h-1.5 bg-white/5 rounded-full overflow-hidden">
-              <div className="h-full bg-purple-500 rounded-full transition-all duration-1000" style={{ width:`${bonusPct}%` }} />
-            </div>
-          </div>
-        </div>
-
-        {/* Coverage Map */}
-        <div className="card mb-6">
-          <h3 className="font-bold text-white mb-5 text-sm">Skills Coverage Map</h3>
-          <div className="grid grid-cols-2 gap-8">
-            <div>
-              <p className="text-xs font-semibold text-slate-400 mb-3">Required ({foundRequired.length}/{roleData.requiredSkills.length})</p>
-              <div className="space-y-1.5">
-                {roleData.requiredSkills.map(skill => {
-                  const found = foundRequired.includes(skill)
-                  return (
-                    <div key={skill} className="flex items-center gap-2">
-                      <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${found ? 'bg-green-400' : 'bg-red-400'}`} />
-                      <div className="flex-1 h-5 bg-white/5 rounded-md overflow-hidden">
-                        <div className={`h-full rounded-md flex items-center px-2 text-xs font-medium transition-all duration-700
-                          ${found ? 'bg-green-500/30 text-green-300' : 'bg-red-500/15 text-red-400'}`}
-                          style={{ width: found ? '100%' : '30%' }}>
-                          {skill}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-slate-400 mb-3">Bonus ({foundNiceToHave.length}/{roleData.niceToHave.length})</p>
-              <div className="space-y-1.5">
-                {roleData.niceToHave.map(skill => {
-                  const found = foundNiceToHave.includes(skill)
-                  return (
-                    <div key={skill} className="flex items-center gap-2">
-                      <div className={`w-1.5 h-1.5 rounded-full flex-shrink-0 ${found ? 'bg-blue-400' : 'bg-white/20'}`} />
-                      <div className="flex-1 h-5 bg-white/5 rounded-md overflow-hidden">
-                        <div className={`h-full rounded-md flex items-center px-2 text-xs font-medium transition-all duration-700
-                          ${found ? 'bg-blue-500/30 text-blue-300' : 'bg-white/5 text-slate-500'}`}
-                          style={{ width: found ? '100%' : '25%' }}>
-                          {skill}
-                        </div>
-                      </div>
-                    </div>
-                  )
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Tabs */}
-        <div className="card">
-          <div className="flex gap-2 mb-5 bg-white/3 border border-white/8 p-1 rounded-xl">
-            {[
-              { id:'required', label:`Required Skills (${roleData.requiredSkills.length})` },
-              { id:'bonus',    label:`Bonus Skills (${roleData.niceToHave.length})` },
-            ].map(tab => (
-              <button key={tab.id} onClick={() => setActiveTab(tab.id)}
-                className={`flex-1 py-2 px-4 rounded-lg text-xs font-semibold transition-all duration-200
-                  ${activeTab === tab.id ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' : 'text-slate-500 hover:text-white'}`}>
-                {tab.label}
-              </button>
-            ))}
-          </div>
-          <div className="space-y-2">
-            {(activeTab === 'required' ? allRequired : allNiceToHave).map((item, i) => (
-              <SkillBar key={item.skill} skill={item.skill} found={item.found} index={i} />
-            ))}
-          </div>
-        </div>
-
-        <div className="mt-5 flex gap-3">
-          <Link to="/courses" className="btn-primary flex-1 justify-center">
-            <BookOpen className="w-4 h-4" /> Browse Courses to Fill Gaps
-          </Link>
-          <Link to="/dashboard" className="btn-secondary flex-1 justify-center">
+          <Link to="/dashboard" className="btn-secondary h-fit">
             <ArrowLeft className="w-4 h-4" /> Back to Dashboard
           </Link>
         </div>
+
+        {/* High-Level Overview Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <div className="card bg-gradient-to-br from-blue-600/10 to-purple-600/10 border-blue-500/30 shadow-lg shadow-blue-500/5 relative overflow-hidden">
+            <div className="absolute -right-4 -bottom-4 opacity-10 text-8xl">🎯</div>
+            <p className="text-slate-300 text-xs tracking-wider uppercase font-bold mb-2 relative">Overall Competency</p>
+            <div className="flex items-baseline gap-2 relative">
+              <span className="text-5xl font-black text-white">{score}%</span>
+            </div>
+            <div className="mt-4 h-2 bg-white/5 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full" style={{ width:`${score}%` }} />
+            </div>
+          </div>
+          <div className="card border-green-500/20 bg-green-500/5 relative overflow-hidden">
+            <p className="text-green-400/80 text-xs tracking-wider uppercase font-bold mb-2">Required Skills Met</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-5xl font-black text-white">{requiredPct}%</span>
+              <span className="text-slate-500 font-medium">({foundRequired.length}/{roleData.requiredSkills.length})</span>
+            </div>
+            <div className="mt-4 h-2 bg-green-500/10 rounded-full overflow-hidden">
+              <div className="h-full bg-green-500 rounded-full transition-all duration-1000" style={{ width:`${requiredPct}%` }} />
+            </div>
+          </div>
+          <div className="card border-blue-500/10 bg-blue-500/5 relative overflow-hidden">
+            <p className="text-blue-400/80 text-xs tracking-wider uppercase font-bold mb-2">Bonus Skills Met</p>
+            <div className="flex items-baseline gap-2">
+              <span className="text-5xl font-black text-white">{bonusPct}%</span>
+              <span className="text-slate-500 font-medium">({foundNiceToHave.length}/{roleData.niceToHave.length})</span>
+            </div>
+            <div className="mt-4 h-2 bg-blue-500/10 rounded-full overflow-hidden">
+              <div className="h-full bg-blue-500 rounded-full transition-all duration-1000" style={{ width:`${bonusPct}%` }} />
+            </div>
+          </div>
+        </div>
+
+        {/* Detailed Grid Map Tabs */}
+        <div className="mb-6 flex gap-4">
+          <button onClick={() => setActiveTab('required')}
+            className={`flex-1 py-4 px-6 rounded-2xl text-sm font-bold transition-all duration-300 border-2
+              ${activeTab === 'required' ? 'bg-purple-600/10 border-purple-500 text-white shadow-xl shadow-purple-500/10' : 'bg-white/5 border-transparent text-slate-400 hover:bg-white/10 hover:text-white'}`}>
+            <span className="text-lg mr-2">🔥</span> Core Required Skills ({roleData.requiredSkills.length})
+          </button>
+          <button onClick={() => setActiveTab('bonus')}
+            className={`flex-1 py-4 px-6 rounded-2xl text-sm font-bold transition-all duration-300 border-2
+              ${activeTab === 'bonus' ? 'bg-blue-600/10 border-blue-500 text-white shadow-xl shadow-blue-500/10' : 'bg-white/5 border-transparent text-slate-400 hover:bg-white/10 hover:text-white'}`}>
+            <span className="text-lg mr-2">✨</span> Nice-to-Have Skills ({roleData.niceToHave.length})
+          </button>
+        </div>
+
+        <div className="mb-12">
+          {activeTab === 'required' && (
+            <div className="animate-fade-in">
+              <div className="mb-6 p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-200 text-sm flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 flex-shrink-0 text-orange-400"/>
+                <p><strong>Note:</strong> These core skills are fundamental. Missing them significantly drops your chances of passing basic resume screenings for <span className="font-bold">{jobRole}</span>.</p>
+              </div>
+              <SkillGrid skills={allRequired} type="required" />
+            </div>
+          )}
+          {activeTab === 'bonus' && (
+            <div className="animate-fade-in">
+               <div className="mb-6 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-blue-200 text-sm flex items-start gap-3">
+                <Target className="w-5 h-5 flex-shrink-0 text-blue-400"/>
+                <p><strong>Note:</strong> These aren't rigidly required, but checking these boxes makes your resume stand out dramatically against other candidates.</p>
+              </div>
+              <SkillGrid skills={allNiceToHave} type="bonus" />
+            </div>
+          )}
+        </div>
+
+        <div className="flex justify-center mb-10">
+          <Link to="/courses" className="btn-primary py-4 px-8 text-base group">
+            <BookOpen className="w-5 h-5" />
+            Browse Courses to Master Missing Skills
+            <ArrowLeft className="w-5 h-5 rotate-180 group-hover:translate-x-1 transition-transform" />
+          </Link>
+        </div>
+
       </div>
     </div>
   )

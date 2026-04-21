@@ -157,9 +157,22 @@ export const GENERIC_QUESTIONS = {
 }
 
 export function getQuestionsForRole(jobRole) {
-  const roleQuestions = INTERVIEW_QUESTIONS[jobRole]
-  if (roleQuestions) return roleQuestions
-  return GENERIC_QUESTIONS
+  const roleQuestions = INTERVIEW_QUESTIONS[jobRole] || GENERIC_QUESTIONS
+  
+  // Helper to shuffle array
+  const shuffle = (arr) => {
+    let array = [...arr]
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array
+  }
+
+  return {
+    technical: shuffle(roleQuestions.technical),
+    behavioral: shuffle(roleQuestions.behavioral),
+  }
 }
 
 export function scoreAnswer(answer, idealKeywords) {

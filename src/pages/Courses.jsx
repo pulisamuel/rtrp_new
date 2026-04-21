@@ -79,22 +79,10 @@ function CourseCard({ course, enrolled, onEnroll }) {
         </div>
         <div className="mt-auto flex items-center justify-between">
           <span className={`font-bold text-xs ${course.free ? 'text-green-400' : 'text-slate-300'}`}>{course.price}</span>
-          {enrolled ? (
-            <div className="flex gap-2">
-              <a href={COURSE_URLS[course.id] || '#'} target="_blank" rel="noopener noreferrer"
-                className="text-xs bg-blue-500/15 text-blue-400 border border-blue-500/20 px-3 py-1.5 rounded-lg font-semibold hover:bg-blue-500/25 transition-colors">
-                Go to Course ↗
-              </a>
-              <Link to="/my-courses" className="text-xs bg-green-500/15 text-green-400 border border-green-500/20 px-3 py-1.5 rounded-lg font-semibold hover:bg-green-500/25 transition-colors">
-                ✓ Enrolled
-              </Link>
-            </div>
-          ) : (
-            <button onClick={() => setShowModal(true)}
-              className="text-xs bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-1.5 rounded-lg font-semibold transition-all duration-200 active:scale-95">
-              Enroll Now →
-            </button>
-          )}
+          <button onClick={() => setShowModal(true)}
+            className="text-xs bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-1.5 rounded-lg font-semibold transition-all duration-200 active:scale-95">
+            View & Enroll →
+          </button>
         </div>
       </div>
 

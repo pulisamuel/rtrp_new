@@ -19,7 +19,7 @@ function AppShell() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-slate-800 flex items-center justify-center">
         <div className="text-center text-white space-y-4">
           <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-2xl font-extrabold mx-auto shadow-xl shadow-blue-500/30 animate-pulse">L</div>
           <p className="text-sm font-semibold text-blue-300">Loading LetMeCheck...</p>
