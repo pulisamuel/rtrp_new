@@ -190,18 +190,42 @@ export default function ResumeAnalyzer() {
                 )}
               </div>
 
-              {/* Job Description (Optional) */}
-              <div className="space-y-3">
+              {/* Target Job Role (Optional) */}
+              <div className="space-y-3 text-left">
                 <label className="block text-sm font-medium text-gray-300">
-                  Job Description <span className="text-gray-500">(Optional)</span>
+                  Target Job Role <span className="text-gray-500">(Optional)</span>
                 </label>
-                <textarea
+                <input
+                  type="text"
+                  list="career-goals-list"
                   value={jobDesc}
                   onChange={(e) => setJobDesc(e.target.value)}
-                  placeholder="Paste the job description here to get tailored feedback..."
-                  rows={4}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none text-white placeholder-gray-500"
+                  placeholder="e.g. Full Stack Developer, Data Scientist..."
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-white placeholder-gray-500"
+                  autoComplete="off"
                 />
+                <datalist id="career-goals-list">
+                  {[
+                    'Frontend Developer','Backend Developer','Full Stack Developer',
+                    'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
+                    'Software Engineer','Embedded Systems Engineer','Game Developer',
+                    'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
+                    'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
+                    'Deep Learning Researcher','Quantitative Analyst',
+                    'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
+                    'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
+                    'Cybersecurity Analyst','Penetration Tester','Security Engineer',
+                    'Information Security Manager','SOC Analyst',
+                    'UI/UX Designer','Product Designer','Interaction Designer',
+                    'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
+                    'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
+                    'Engineering Manager','Tech Lead',
+                    'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
+                    'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
+                    'IT Consultant','Technical Writer','Developer Advocate',
+                    'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer'
+                  ].map(g => <option key={g} value={g} />)}
+                </datalist>
               </div>
 
               {/* Analyze Button */}

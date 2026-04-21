@@ -273,19 +273,43 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Job Description */}
-              <div className="space-y-2">
+              {/* Target Job Role */}
+              <div className="space-y-2 text-left">
                 <label className="block text-sm font-medium text-gray-300">
-                  Job Description
+                  Target Job Role
                   <span className="ml-2 text-xs text-gray-500 font-normal">(Optional — improves accuracy)</span>
                 </label>
-                <textarea
+                <input
+                  type="text"
+                  list="career-goals-list"
                   value={jobDesc}
                   onChange={(e) => setJobDesc(e.target.value)}
-                  placeholder="Paste the job description here to get tailored keyword matching and role-specific feedback..."
-                  rows={4}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all resize-none text-white placeholder-gray-600 text-sm"
+                  placeholder="e.g. Full Stack Developer, Data Scientist..."
+                  className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all text-white placeholder-gray-600 text-sm"
+                  autoComplete="off"
                 />
+                <datalist id="career-goals-list">
+                  {[
+                    'Frontend Developer','Backend Developer','Full Stack Developer',
+                    'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
+                    'Software Engineer','Embedded Systems Engineer','Game Developer',
+                    'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
+                    'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
+                    'Deep Learning Researcher','Quantitative Analyst',
+                    'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
+                    'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
+                    'Cybersecurity Analyst','Penetration Tester','Security Engineer',
+                    'Information Security Manager','SOC Analyst',
+                    'UI/UX Designer','Product Designer','Interaction Designer',
+                    'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
+                    'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
+                    'Engineering Manager','Tech Lead',
+                    'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
+                    'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
+                    'IT Consultant','Technical Writer','Developer Advocate',
+                    'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer'
+                  ].map(g => <option key={g} value={g} />)}
+                </datalist>
               </div>
 
               {/* Analyze Button */}

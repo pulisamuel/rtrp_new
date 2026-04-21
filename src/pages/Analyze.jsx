@@ -53,9 +53,14 @@ function validateJobRole(input) {
 }
 
 export default function Analyze() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  
+  const initialJobDesc = location.state?.jobDesc || ''
+
   const [file, setFile]                   = useState(null)
   const [jobRole, setJobRole]             = useState('')
-  const [roleInput, setRoleInput]         = useState('')
+  const [roleInput, setRoleInput]         = useState(initialJobDesc)
   const [roleSuggestions, setRoleSuggestions] = useState([])
   const [roleValidation, setRoleValidation]   = useState(null)
   const [showSuggestions, setShowSuggestions] = useState(false)
@@ -66,9 +71,20 @@ export default function Analyze() {
   const [step, setStep]                   = useState(1)
   const fileRef = useRef()
   const { setAnalysisResult } = useApp()
-  const navigate = useNavigate()
-  const location = useLocation()
-  const [jobDesc] = useState(location.state?.jobDesc || '')
+
+  React.useEffect(() => {
+    if (initialJobDesc) {
+      const result = validateJobRole(initialJobDesc)
+      setRoleValidation(result)
+      if (result.valid) {
+        setJobRole(result.matched)
+        if (result.suggestion && result.suggestion !== initialJobDesc) {
+          setRoleInput(result.suggestion)
+        }
+        setStep(s => Math.max(s, 3))
+      }
+    }
+  }, [initialJobDesc])
 
   const handleRoleInput = (val) => {
     setRoleInput(val); setRoleValidation(null); setJobRole(''); setError('')
