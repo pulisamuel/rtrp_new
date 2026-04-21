@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import {
@@ -60,33 +60,10 @@ function StepCard({ number, icon: Icon, title, desc }) {
 // ─── Main Component ───────────────────────────────────────────────────────────
 export default function Home() {
   const { profile, analysisResult } = useApp()
-  const fileRef = useRef()
   const navigate = useNavigate()
-  const uploadRef = useRef()
-
-  const [file, setFile] = useState(null)
-  const [dragOver, setDragOver] = useState(false)
-  const [jobDesc, setJobDesc] = useState('')
-
-  const handleFile = (f) => {
-    if (!f) return
-    if (!f.name.toLowerCase().endsWith('.pdf')) {
-      alert('Please upload a PDF file')
-      return
-    }
-    setFile(f)
-  }
-
+  
   const handleAnalyze = () => {
-    if (!file) {
-      alert('Please upload your resume first')
-      return
-    }
-    navigate('/analyze', { state: { jobDesc } })
-  }
-
-  const scrollToUpload = () => {
-    uploadRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    navigate('/analyze')
   }
 
   return (
@@ -156,7 +133,7 @@ export default function Home() {
             {/* CTA Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
-                onClick={scrollToUpload}
+                onClick={handleAnalyze}
                 className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/60 active:scale-95"
               >
                 <Sparkles className="w-5 h-5" />
@@ -194,7 +171,7 @@ export default function Home() {
 
           {/* Scroll Indicator */}
           <button
-            onClick={scrollToUpload}
+            onClick={handleAnalyze}
             className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 hover:text-gray-300 transition-colors animate-bounce"
           >
             <span className="text-xs">Scroll to analyze</span>
@@ -202,104 +179,7 @@ export default function Home() {
           </button>
         </section>
 
-        {/* ══════════════════════════════════════════════════════════════════════
-            UPLOAD SECTION
-        ══════════════════════════════════════════════════════════════════════ */}
-        <section ref={uploadRef} className="px-6 py-24">
-          <div className="max-w-2xl mx-auto space-y-8">
 
-            {/* Section Header */}
-            <div className="text-center space-y-3 animate-fade-up">
-              <h2 className="text-4xl md:text-5xl font-bold">
-                Upload Your Resume
-              </h2>
-              <p className="text-gray-400">Drop your PDF and let AI do the heavy lifting</p>
-            </div>
-
-            {/* Main Upload Card */}
-            <GlassCard className="p-8 space-y-6 animate-fade-up" hover={false}>
-
-              {/* Drag & Drop Zone */}
-              <div
-                className={`relative border-2 border-dashed rounded-2xl p-12 text-center cursor-pointer transition-all duration-300 ${
-                  dragOver
-                    ? 'border-blue-400 bg-blue-500/10 scale-[1.02]'
-                    : file
-                    ? 'border-green-400/60 bg-green-500/5'
-                    : 'border-white/15 hover:border-blue-400/50 hover:bg-white/3'
-                }`}
-                onDragOver={(e) => { e.preventDefault(); setDragOver(true) }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={(e) => { e.preventDefault(); setDragOver(false); handleFile(e.dataTransfer.files[0]) }}
-                onClick={() => fileRef.current.click()}
-              >
-                <input
-                  ref={fileRef}
-                  type="file"
-                  accept=".pdf,application/pdf"
-                  className="hidden"
-                  onChange={(e) => handleFile(e.target.files[0])}
-                />
-
-                {file ? (
-                  <div className="space-y-4 animate-scale-in">
-                    <div className="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                      <FileText className="w-8 h-8 text-green-400" />
-                    </div>
-                    <div>
-                      <p className="text-lg font-semibold text-green-400">{file.name}</p>
-                      <p className="text-sm text-gray-400 mt-1">{(file.size / 1024).toFixed(1)} KB · Ready to analyze</p>
-                    </div>
-                    <button
-                      onClick={(e) => { e.stopPropagation(); setFile(null) }}
-                      className="text-sm text-gray-500 hover:text-red-400 transition-colors"
-                    >
-                      Remove file
-                    </button>
-                  </div>
-                ) : (
-                  <div className="space-y-4">
-                    <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                      <Upload className="w-8 h-8 text-blue-400" />
-                    </div>
-                    <div>
-                      <p className="text-lg font-semibold text-white">Drop your resume here</p>
-                      <p className="text-sm text-gray-400 mt-2">or click to browse · PDF only</p>
-                    </div>
-                    <div className="inline-flex items-center gap-2 px-5 py-2.5 bg-blue-600/20 border border-blue-500/30 rounded-xl text-sm font-semibold text-blue-300">
-                      Browse Files
-                    </div>
-                  </div>
-                )}
-              </div>
-
-
-
-              {/* Analyze Button */}
-              <button
-                onClick={handleAnalyze}
-                disabled={!file}
-                className={`w-full py-4 rounded-xl font-semibold text-lg transition-all duration-300 flex items-center justify-center gap-3 ${
-                  !file
-                    ? 'bg-white/5 text-gray-600 cursor-not-allowed border border-white/5'
-                    : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-[1.02] active:scale-[0.98]'
-                }`}
-              >
-                <Sparkles className="w-5 h-5" />
-                Analyze My Resume
-                <ArrowRight className="w-5 h-5" />
-              </button>
-
-              {/* Or go to full analyzer */}
-              <p className="text-center text-xs text-gray-500">
-                Want more options?{' '}
-                <Link to="/analyze" className="text-blue-400 hover:text-blue-300 font-semibold transition-colors">
-                  Open full analyzer →
-                </Link>
-              </p>
-            </GlassCard>
-          </div>
-        </section>
 
         {/* ══════════════════════════════════════════════════════════════════════
             HOW IT WORKS
@@ -423,7 +303,7 @@ export default function Home() {
                   Join thousands of students who improved their ATS score and got more interview calls.
                 </p>
                 <button
-                  onClick={scrollToUpload}
+                  onClick={handleAnalyze}
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <Sparkles className="w-5 h-5" />
