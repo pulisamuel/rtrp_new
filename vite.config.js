@@ -3,14 +3,17 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  optimizeDeps: {
-    include: ['pdfjs-dist'],
-    exclude: ['iceberg-js'],
-  },
   build: {
+    chunkSizeWarningLimit: 2000,
     rollupOptions: {
-      external: ['iceberg-js'],
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          charts: ['recharts'],
+          motion: ['framer-motion'],
+          supabase: ['@supabase/supabase-js'],
+        },
+      },
     },
-    chunkSizeWarningLimit: 1000,
   },
 })
