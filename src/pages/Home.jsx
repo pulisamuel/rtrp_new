@@ -6,6 +6,7 @@ import {
   TrendingUp, Target, Zap, Shield, ArrowRight, Star,
   BarChart3, BookOpen, Mic, User, ChevronDown
 } from 'lucide-react'
+import ResumeShowcase from '../components/ResumeShowcase'
 
 // ─── Reusable Glass Card ──────────────────────────────────────────────────────
 function GlassCard({ children, className = '', hover = true }) {
@@ -217,6 +218,11 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* ══════════════════════════════════════════════════════════════════════
+            RESUME SHOWCASE
+        ══════════════════════════════════════════════════════════════════════ */}
+        <ResumeShowcase />
 
         {/* ══════════════════════════════════════════════════════════════════════
             FEATURES SECTION

@@ -59,6 +59,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
   const [verifyStep, setVerifyStep]         = useState('')
   const [verifyResult, setVerifyResult]     = useState(null)
   const [dragOver, setDragOver]             = useState(false)
+  const { profile } = useApp()
   const isCompleted = progress === 100
 
   const levelColor = {
@@ -99,10 +100,33 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
     } catch {}
     setVerifyStep(isImage ? 'Reading certificate image (OCR)...' : 'Reading certificate PDF...')
     const text = await extractTextFromCertificate(certFile)
-    setVerifyStep('Verifying certificate content...')
-    const result = verifyCertificateContent(text, course)
-    if (result.valid) { setVerifyResult({ success:true, message:`✅ ${result.message}` }); onVerify(course.id) }
-    else { setVerifyResult({ success:false, message:`❌ ${result.message}` }) }
+    
+    if (!profile?.name || profile.name.trim().length < 2) {
+      setVerifyResult({ 
+        success: false, 
+        message: '❌ Profile name missing. Please set your full name in the Profile page first so we can verify the certificate is yours.' 
+      })
+      setVerifying(false)
+      return
+    }
+
+    setVerifyStep('Analyzing identity and credentials...')
+    const result = verifyCertificateContent(text, course, profile.name)
+    
+    if (result.valid) { 
+      setVerifyResult({ 
+        success: true, 
+        message: result.message,
+        details: result.details 
+      })
+      onVerify(course.id) 
+    } else { 
+      setVerifyResult({ 
+        success: false, 
+        message: result.message,
+        details: result.details
+      }) 
+    }
     setVerifyStep(''); setVerifying(false)
   }
 
@@ -190,9 +214,24 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
           )}
 
           {verifyResult && (
-            <div className={`mt-3 p-3 rounded-xl text-xs font-medium animate-fade-in
-              ${verifyResult.success ? 'bg-green-500/15 text-green-400 border border-green-500/20' : 'bg-red-500/10 text-red-400 border border-red-500/20'}`}>
-              {verifyResult.message}
+            <div className={`mt-3 p-3 rounded-xl transition-all duration-300 animate-fade-in
+              ${verifyResult.success ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
+              <p className={`text-xs font-bold mb-2 ${verifyResult.success ? 'text-green-400' : 'text-red-400'}`}>
+                {verifyResult.success ? '✅ ' : '❌ '}{verifyResult.message}
+              </p>
+              
+              {verifyResult.details && (
+                <div className="space-y-1 border-t border-white/5 pt-2 mt-2">
+                  <p className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-1">Verification Details:</p>
+                  {verifyResult.details.map((detail, idx) => (
+                    <div key={idx} className="flex items-center gap-1.5 text-[10px]">
+                      <span className={detail.includes('FAILED') || detail.includes('MISMATCH') ? 'text-red-400' : 'text-slate-400'}>
+                        {detail.includes('FAILED') || detail.includes('MISMATCH') ? '🔴' : '🔹'} {detail}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

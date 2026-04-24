@@ -67,47 +67,99 @@ async function extractFromImage(file) {
   }
 }
 
-export function verifyCertificateContent(text, course) {
+export function verifyCertificateContent(text, course, userName = '') {
   if (!text || text.trim().length < 20) {
     return { valid: false, reason: 'no_text', message: 'Could not read any text from this file. Please upload a clear certificate image or PDF.' }
   }
 
   const lower = text.toLowerCase()
+  let score = 0
+  const details = []
 
-  // Check required keyword groups — at least 1 from each group must appear
-  const missingGroups = CERT_REQUIRED.filter(group => !group.some(kw => lower.includes(kw)))
-  if (missingGroups.length > 0) {
-    return {
-      valid: false,
-      reason: 'missing_cert_keywords',
-      message: `This doesn't look like a certificate. Missing required words like: ${missingGroups.map(g => `"${g[0]}"`).join(', ')}. Please upload your actual completion certificate.`,
+  // 1. IDENTITY CHECK (40 pts)
+  if (userName && userName.length > 2) {
+    // Split name and check for all parts (e.g., "John Doe" -> "john" and "doe")
+    const nameParts = userName.toLowerCase().split(/\s+/).filter(p => p.length > 1)
+    const matchedParts = nameParts.filter(part => lower.includes(part))
+    
+    if (matchedParts.length === nameParts.length) {
+      score += 40
+      details.push('Identity matched (User Name found)')
+    } else if (matchedParts.length > 0) {
+      score += 20
+      details.push('Identity partially matched')
+    } else {
+      details.push('IDENTITY FAILED: Name not found on certificate')
     }
+  } else {
+    details.push('Identity check skipped (No name in profile)')
   }
 
-  // Check supporting keywords — at least 1 must appear
-  const hasSupporting = CERT_SUPPORTING.some(kw => lower.includes(kw))
-  if (!hasSupporting) {
-    return {
-      valid: false,
-      reason: 'missing_supporting',
-      message: 'This file does not appear to be a course completion certificate. Please upload the certificate you received from the course platform.',
-    }
+  // 2. PROVIDER LOCK (15 pts)
+  const provider = course.provider.toLowerCase()
+  if (lower.includes(provider)) {
+    score += 15
+    details.push(`Platform matched: ${course.provider}`)
+  } else {
+    details.push(`PLATFORM MISMATCH: Expected ${course.provider}`)
   }
 
-  // Check course relevance — provider OR skill OR title word must appear
-  const courseWords = [
-    course.provider.toLowerCase(),
-    course.skill.toLowerCase(),
-    ...course.title.toLowerCase().split(' ').filter(w => w.length > 4),
+  // 3. TITLE PRECISION (30 pts)
+  const commonWords = ['complete', 'masterclass', 'guide', 'bootcamp', 'professional', 'specialization', 'certificate', 'certification', 'course', 'with', 'from', 'basics', 'advanced', 'beginner', 'intermediate', 'incl', 'including', 'the', 'and']
+  const titleWords = course.title.toLowerCase()
+    .split(/[\s,()&-]+/)
+    .filter(w => w.length > 3 && !commonWords.includes(w))
+  
+  const uniqueTitleWords = [...new Set(titleWords)]
+  if (uniqueTitleWords.length > 0) {
+    const matchedTitleWords = uniqueTitleWords.filter(w => lower.includes(w))
+    const titleMatchRatio = matchedTitleWords.length / uniqueTitleWords.length
+    
+    if (titleMatchRatio >= 0.7) score += 30
+    else if (titleMatchRatio >= 0.4) score += 15
+    
+    details.push(`Course Title Match: ${Math.round(titleMatchRatio * 100)}%`)
+  } else {
+    // Fallback for very short titles
+    if (lower.includes(course.title.toLowerCase())) score += 30
+    details.push('Course Title: Exact match')
+  }
+
+  // 4. AUTHENTICITY MARKERS (15 pts)
+  const structuralMarkers = [
+    'successfully completed', 'has completed', 'awarded to', 'this is to certify',
+    'certificate of', 'completion', 'achievement', 'recognition',
+    'credential id', 'serial number', 'verify at', 'issued on',
   ]
-  const hasCourseMatch = courseWords.some(w => lower.includes(w))
-  if (!hasCourseMatch) {
+  const foundMarkers = structuralMarkers.filter(m => lower.includes(m))
+  if (foundMarkers.length >= 2) score += 15
+  else if (foundMarkers.length >= 1) score += 7
+  
+  // Date pattern check (very basic)
+  const hasDate = /\d{1,2}[-/]\d{1,2}[-/]\d{2,4}|(?:jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\s+\d{1,2},?\s+\d{4}/i.test(lower)
+  if (hasDate) score += 5 // bonus points for having a date
+
+  const finalScore = Math.min(score, 100)
+  const PASS_THRESHOLD = 85
+
+  if (finalScore < PASS_THRESHOLD) {
+    let failMessage = `Verification Score: ${finalScore}/100. This is below the strict requirement of ${PASS_THRESHOLD}.`
+    if (score < 40 && userName) failMessage += " Specifically, we couldn't find your name on the certificate."
+    else if (score < 60) failMessage += " The course title or platform does not match sufficiently."
+
     return {
       valid: false,
-      reason: 'wrong_course',
-      message: `Certificate content doesn't match this course. Expected to find "${course.provider}" or "${course.skill}" in the certificate. Please upload the correct certificate for "${course.title}".`,
+      reason: 'strict_fail',
+      score: finalScore,
+      details,
+      message: failMessage + " Please upload the official certificate for this specific course."
     }
   }
 
-  return { valid: true, message: `Certificate verified for "${course.title}". Completion recorded.` }
+  return { 
+    valid: true, 
+    score: finalScore,
+    details,
+    message: `Certificate verified with high confidence (${finalScore}/100). Success!` 
+  }
 }
