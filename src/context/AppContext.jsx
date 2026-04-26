@@ -113,14 +113,14 @@ export const AppProvider = ({ children }) => {
     const profileData = { name, email, college, year, graduation, goal, avatar: null }
 
     // Create user row in public.users table
-    const { error: dbError } = await supabase.from('users').insert({
+    const { error: dbError } = await supabase.from('users').upsert({
       id: data.user.id,
       profile: profileData,
       analysis_result: null,
       enrolled_courses: [],
       course_progress: {},
-    })
-    if (dbError) throw dbError
+    }, { onConflict: 'id' })
+    if (dbError) console.error('Upsert profile error:', dbError)
 
     setProfileState(profileData)
     return data.user
@@ -201,6 +201,7 @@ export const AppProvider = ({ children }) => {
     </AppContext.Provider>
   )
 }
+
 
 
 
