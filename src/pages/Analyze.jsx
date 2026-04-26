@@ -108,10 +108,10 @@ export default function Analyze() {
     if (val.length > 0) {
       const direct = ALL_ROLES.filter(r => r.toLowerCase().includes(val.toLowerCase()))
       const aliases = Object.entries(ROLE_ALIASES).filter(([a]) => a.includes(val.toLowerCase())).map(([,r]) => r)
-      setRoleSuggestions([...new Set([...direct, ...aliases])].slice(0, 8))
+      setRoleSuggestions([...new Set([...direct, ...aliases])])
       setShowSuggestions(true)
     } else {
-      setRoleSuggestions(ALL_ROLES.slice(0, 8)); setShowSuggestions(true)
+      setRoleSuggestions(ALL_ROLES); setShowSuggestions(true)
     }
   }
 
@@ -276,8 +276,8 @@ export default function Analyze() {
               type="text" value={roleInput}
               onChange={e => handleRoleInput(e.target.value)}
               onFocus={() => {
-                const m = roleInput ? ALL_ROLES.filter(r => r.toLowerCase().includes(roleInput.toLowerCase())) : ALL_ROLES.slice(0, 8)
-                setRoleSuggestions(m.slice(0, 8)); setShowSuggestions(true)
+                const m = roleInput ? ALL_ROLES.filter(r => r.toLowerCase().includes(roleInput.toLowerCase())) : ALL_ROLES
+                setRoleSuggestions(m); setShowSuggestions(true)
               }}
               onBlur={handleRoleBlur}
               onKeyDown={e => {
