@@ -4,7 +4,26 @@ import { useApp } from '../context/AppContext'
 import { JOB_ROLES } from '../utils/resumeAnalyzer'
 import { Upload, FileText, Search, Sparkles, CheckCircle, XCircle, Shield, Zap, Target, X } from 'lucide-react'
 
-const ALL_ROLES = Object.keys(JOB_ROLES)
+const ALL_ROLES = [
+  'Frontend Developer','Backend Developer','Full Stack Developer',
+  'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
+  'Software Engineer','Embedded Systems Engineer','Game Developer',
+  'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
+  'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
+  'Deep Learning Researcher','Quantitative Analyst',
+  'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
+  'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
+  'Cybersecurity Analyst','Penetration Tester','Security Engineer',
+  'Information Security Manager','SOC Analyst',
+  'UI/UX Designer','Product Designer','Interaction Designer',
+  'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
+  'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
+  'Engineering Manager','Tech Lead',
+  'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
+  'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
+  'IT Consultant','Technical Writer','Developer Advocate',
+  'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer',
+]
 
 const ROLE_ICONS = {
   'Frontend Developer':'⚛️','Backend Developer':'🔧','Full Stack Developer':'🔄',
@@ -42,11 +61,10 @@ function validateJobRole(input) {
   if (trimmed.length < 2) return { valid: false, message: 'Job role is too short' }
   if (trimmed.length > 60) return { valid: false, message: 'Job role is too long' }
   
-  // Always valid if length is okay
   const exact = ALL_ROLES.find(r => r.toLowerCase() === trimmed.toLowerCase())
   if (exact) return { valid: true, matched: exact, message: '' }
   
-  return { valid: true, matched: trimmed, message: '' }
+  return { valid: false, matched: null, message: "Job role doesn't exist. Please select from the suggestions." }
 }
 
 export default function Analyze() {
@@ -283,7 +301,6 @@ export default function Analyze() {
                     className="w-full text-left px-4 py-2.5 text-sm hover:bg-navy-50 transition-colors border-b border-navy-100 last:border-0 flex items-center gap-2.5 text-body hover:text-navy">
                     <span className="text-base">{ROLE_ICONS[r] || '💼'}</span>
                     <span className="font-medium">{r}</span>
-                    <span className="ml-auto text-xs text-green-700 font-semibold bg-green-500/10 px-2 py-0.5 rounded-full">Supported</span>
                   </button>
                 ))}
               </div>
