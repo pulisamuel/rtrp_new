@@ -172,14 +172,14 @@ export default function Analyze() {
     <div className="page-wrapper animate-fade-in">
       {/* Ambient */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-purple-600/8 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-midblue/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald/8 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-3xl mx-auto relative">
         {/* Header */}
         <div className="page-header">
-          <div className="section-label"><Sparkles className="w-3.5 h-3.5 text-blue-400" /> AI-Powered Analysis</div>
+          <div className="section-label"><Sparkles className="w-3.5 h-3.5 text-midblue" /> AI-Powered Analysis</div>
           <h1 className="page-title">Resume Analyzer</h1>
           <p className="page-subtitle">Upload your resume and get an instant ATS score with personalized guidance</p>
         </div>
@@ -191,28 +191,28 @@ export default function Analyze() {
               <div className="flex items-center gap-2">
                 <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-300
                   ${step >= s.n
-                    ? 'bg-gradient-to-br from-blue-600 to-purple-600 text-white shadow-lg shadow-blue-500/30'
-                    : 'bg-white/5 border border-white/10 text-slate-500'}`}>
+                    ? 'bg-gradient-to-br from-midblue to-emerald text-navy shadow-lg shadow-midblue/30'
+                    : 'bg-navy-50 border border-navy-100 text-muted'}`}>
                   {step > s.n ? '✓' : s.n}
                 </div>
-                <span className={`text-xs font-medium hidden sm:block transition-colors ${step >= s.n ? 'text-blue-400' : 'text-slate-600'}`}>{s.label}</span>
+                <span className={`text-xs font-medium hidden sm:block transition-colors ${step >= s.n ? 'text-midblue' : 'text-muted'}`}>{s.label}</span>
               </div>
-              {i < 2 && <div className={`flex-1 h-px transition-all duration-300 ${step > s.n ? 'bg-gradient-to-r from-blue-500 to-purple-500' : 'bg-white/10'}`} />}
+              {i < 2 && <div className={`flex-1 h-px transition-all duration-300 ${step > s.n ? 'bg-gradient-to-r from-midblue to-emerald' : 'bg-navy-100'}`} />}
             </React.Fragment>
           ))}
         </div>
 
         {/* Step 1 — Upload */}
         <div className="card mb-5">
-          <h2 className="font-bold text-white mb-4 flex items-center gap-2 text-base">
-            <span className="w-6 h-6 bg-blue-500/20 text-blue-400 rounded-lg flex items-center justify-center text-xs font-bold">1</span>
+          <h2 className="font-bold text-navy mb-4 flex items-center gap-2 text-base">
+            <span className="w-6 h-6 bg-midblue/20 text-midblue rounded-lg flex items-center justify-center text-xs font-bold">1</span>
             Upload Your Resume
           </h2>
           <div
             className={`border-2 border-dashed rounded-2xl p-10 text-center cursor-pointer transition-all duration-300
-              ${dragOver ? 'border-blue-400 bg-blue-500/10 scale-[1.01]'
+              ${dragOver ? 'border-blue-400 bg-midblue/10 scale-[1.01]'
               : file ? 'border-green-400/50 bg-green-500/5'
-              : 'border-white/10 hover:border-blue-400/50 hover:bg-white/5'}`}
+              : 'border-navy-100 hover:border-blue-400/50 hover:bg-navy-50'}`}
             onDragOver={e => { e.preventDefault(); setDragOver(true) }}
             onDragLeave={() => setDragOver(false)}
             onDrop={e => { e.preventDefault(); setDragOver(false); handleFile(e.dataTransfer.files[0]) }}
@@ -225,18 +225,18 @@ export default function Analyze() {
                   <FileText className="w-7 h-7 text-green-400" />
                 </div>
                 <p className="font-bold text-green-400">{file.name}</p>
-                <p className="text-sm text-slate-500">{file.isStored ? 'Persisted Resume' : `${(file.size / 1024).toFixed(1)} KB`} · Ready to analyze</p>
-                <button className="text-xs text-slate-500 hover:text-red-400 transition-colors"
+                <p className="text-sm text-muted">{file.isStored ? 'Persisted Resume' : `${(file.size / 1024).toFixed(1)} KB`} · Ready to analyze</p>
+                <button className="text-xs text-muted hover:text-red-400 transition-colors"
                   onClick={e => { e.stopPropagation(); setFile(null); setStoredResume('', ''); setStep(1) }}>Change resume</button>
               </div>
             ) : (
               <div className="space-y-3">
-                <div className="w-14 h-14 bg-blue-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                  <Upload className="w-7 h-7 text-blue-400" />
+                <div className="w-14 h-14 bg-midblue/20 rounded-2xl flex items-center justify-center mx-auto">
+                  <Upload className="w-7 h-7 text-midblue" />
                 </div>
-                <p className="font-semibold text-white">Drop your resume here</p>
-                <p className="text-sm text-slate-500">or click to browse · PDF only</p>
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600/20 border border-blue-500/30 rounded-xl text-sm font-semibold text-blue-300">
+                <p className="font-semibold text-navy">Drop your resume here</p>
+                <p className="text-sm text-muted">or click to browse · PDF only</p>
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-midblue/20 border border-midblue/30 rounded-xl text-sm font-semibold text-midblue">
                   Browse Files
                 </div>
               </div>
@@ -246,14 +246,14 @@ export default function Analyze() {
 
         {/* Step 2 — Job Role */}
         <div className="card mb-5">
-          <h2 className="font-bold text-white mb-1 flex items-center gap-2 text-base">
-            <span className="w-6 h-6 bg-purple-500/20 text-purple-400 rounded-lg flex items-center justify-center text-xs font-bold">2</span>
+          <h2 className="font-bold text-navy mb-1 flex items-center gap-2 text-base">
+            <span className="w-6 h-6 bg-purple-500/20 text-midblue rounded-lg flex items-center justify-center text-xs font-bold">2</span>
             Target Job Role
           </h2>
-          <p className="text-slate-500 text-xs mb-4 ml-8">Type your dream job title</p>
+          <p className="text-muted text-xs mb-4 ml-8">Type your dream job title</p>
 
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 z-10" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted z-10" />
             <input
               type="text" value={roleInput}
               onChange={e => handleRoleInput(e.target.value)}
@@ -272,15 +272,15 @@ export default function Analyze() {
             />
             {roleInput && (
               <button onClick={() => { setRoleInput(''); setJobRole(''); setRoleValidation(null); setShowSuggestions(false) }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white transition-colors">
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-navy transition-colors">
                 <X className="w-4 h-4" />
               </button>
             )}
             {showSuggestions && roleSuggestions.length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-gray-900 border border-white/10 rounded-xl shadow-2xl z-30 overflow-hidden max-h-64 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white border border-navy-100 rounded-xl shadow-2xl z-30 overflow-hidden max-h-64 overflow-y-auto">
                 {roleSuggestions.map(r => (
                   <button key={r} onMouseDown={() => selectRole(r)}
-                    className="w-full text-left px-4 py-2.5 text-sm hover:bg-white/5 transition-colors border-b border-white/5 last:border-0 flex items-center gap-2.5 text-slate-300 hover:text-white">
+                    className="w-full text-left px-4 py-2.5 text-sm hover:bg-navy-50 transition-colors border-b border-navy-100 last:border-0 flex items-center gap-2.5 text-body hover:text-navy">
                     <span className="text-base">{ROLE_ICONS[r] || '💼'}</span>
                     <span className="font-medium">{r}</span>
                     <span className="ml-auto text-xs text-green-400 font-semibold bg-green-500/10 px-2 py-0.5 rounded-full">Supported</span>
@@ -312,8 +312,8 @@ export default function Analyze() {
         <button onClick={handleAnalyze} disabled={!canAnalyze}
           className={`w-full py-4 rounded-xl font-bold text-base transition-all duration-300 flex items-center justify-center gap-3
             ${!canAnalyze
-              ? 'bg-white/5 text-slate-600 cursor-not-allowed border border-white/5'
-              : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 hover:scale-[1.01] active:scale-[0.99]'}`}>
+              ? 'bg-navy-50 text-muted cursor-not-allowed border border-navy-100'
+              : 'bg-gradient-to-r from-midblue to-emerald hover:from-midblue hover:to-emerald text-navy shadow-xl shadow-midblue/30 hover:shadow-blue-500/50 hover:scale-[1.01] active:scale-[0.99]'}`}>
           {loading ? (
             <span className="flex items-center gap-3">
               <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
@@ -334,10 +334,10 @@ export default function Analyze() {
             { icon: Zap, label: 'Instant Results', desc: 'Score in seconds' },
             { icon: Target, label: '20 Job Roles', desc: 'Precise per role' },
           ].map(({ icon: Icon, label, desc }) => (
-            <div key={label} className="text-center p-4 bg-white/5 border border-white/5 rounded-xl">
-              <Icon className="w-5 h-5 text-blue-400 mx-auto mb-2" />
-              <p className="font-semibold text-white text-xs">{label}</p>
-              <p className="text-slate-500 text-xs mt-0.5">{desc}</p>
+            <div key={label} className="text-center p-4 bg-navy-50 border border-navy-100 rounded-xl">
+              <Icon className="w-5 h-5 text-midblue mx-auto mb-2" />
+              <p className="font-semibold text-navy text-xs">{label}</p>
+              <p className="text-muted text-xs mt-0.5">{desc}</p>
             </div>
           ))}
         </div>
@@ -345,3 +345,8 @@ export default function Analyze() {
     </div>
   )
 }
+
+
+
+
+

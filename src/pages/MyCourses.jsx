@@ -136,29 +136,29 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
         <div className="text-3xl flex-shrink-0">{course.image}</div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="font-bold text-white text-sm leading-tight">{course.title}</h3>
-            <span className={`badge flex-shrink-0 border ${levelColor[course.level] || 'bg-white/5 text-slate-400 border-white/10'}`}>{course.level}</span>
+            <h3 className="font-bold text-navy text-sm leading-tight">{course.title}</h3>
+            <span className={`badge flex-shrink-0 border ${levelColor[course.level] || 'bg-navy-50 text-body border-navy-100'}`}>{course.level}</span>
           </div>
-          <p className="text-slate-500 text-xs mt-1">{course.provider} · {course.duration}</p>
-          <p className="text-xs text-slate-500 mt-0.5">Skill: <span className="font-medium text-blue-400">{course.skill}</span></p>
-          <p className="text-xs mt-1 font-semibold text-slate-400">{statusLabel}</p>
+          <p className="text-muted text-xs mt-1">{course.provider} · {course.duration}</p>
+          <p className="text-xs text-muted mt-0.5">Skill: <span className="font-medium text-midblue">{course.skill}</span></p>
+          <p className="text-xs mt-1 font-semibold text-body">{statusLabel}</p>
         </div>
       </div>
 
       <div className="mb-4">
         <div className="flex justify-between items-center mb-1.5">
-          <span className="text-xs font-semibold text-slate-400">Course Progress</span>
-          <span className="text-xs font-bold text-blue-400">{progress}%</span>
+          <span className="text-xs font-semibold text-body">Course Progress</span>
+          <span className="text-xs font-bold text-midblue">{progress}%</span>
         </div>
-        <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+        <div className="h-2 bg-navy-50 rounded-full overflow-hidden">
           <div className={`h-full bg-gradient-to-r ${progressColor} rounded-full transition-all duration-700`} style={{ width:`${progress}%` }} />
         </div>
-        <p className="text-xs text-slate-600 mt-1.5">Progress updates when you submit your completion certificate.</p>
+        <p className="text-xs text-muted mt-1.5">Progress updates when you submit your completion certificate.</p>
       </div>
 
       <div className="flex gap-2 mb-4">
         <a href={COURSE_URLS[course.id]||'#'} target="_blank" rel="noopener noreferrer"
-          className="flex-1 text-center py-2 text-xs font-semibold bg-blue-500/15 text-blue-400 border border-blue-500/20 rounded-xl hover:bg-blue-500/25 transition-colors">
+          className="flex-1 text-center py-2 text-xs font-semibold bg-blue-500/15 text-midblue border border-midblue-200 rounded-xl hover:bg-blue-500/25 transition-colors">
           {progress === 0 ? '▶ Start Course ↗' : '↗ Continue on Platform'}
         </a>
         {!isCompleted && (
@@ -175,7 +175,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
           <p className="text-xs text-green-400/60 mb-3">Complete on <span className="font-semibold">{course.provider}</span>, download your certificate, then upload here.</p>
           <div
             className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all duration-200 mb-3
-              ${dragOver ? 'border-green-400 bg-green-500/15' : certFile ? 'border-green-400/50 bg-green-500/8' : 'border-white/10 hover:border-green-400/40'}`}
+              ${dragOver ? 'border-green-400 bg-green-500/15' : certFile ? 'border-green-400/50 bg-green-500/8' : 'border-navy-100 hover:border-green-400/40'}`}
             onDragOver={e => { e.preventDefault(); setDragOver(true) }}
             onDragLeave={() => setDragOver(false)}
             onDrop={e => { e.preventDefault(); setDragOver(false); handleCertFile(e.dataTransfer.files[0]) }}
@@ -189,13 +189,13 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
                 <p className="font-semibold text-green-400 text-xs">{certFile.name}</p>
                 <p className="text-green-400/60 text-xs">{(certFile.size/1024).toFixed(1)} KB</p>
                 <button onClick={() => { setCertFile(null); setCertPreview(null); setVerifyResult(null) }}
-                  className="mt-1 text-xs text-slate-500 hover:text-red-400 transition-colors">Remove</button>
+                  className="mt-1 text-xs text-muted hover:text-red-400 transition-colors">Remove</button>
               </div>
             ) : (
               <div>
                 <p className="text-xl mb-1">📎</p>
-                <p className="text-xs text-slate-400 font-medium">Drop certificate or click to browse</p>
-                <p className="text-xs text-slate-600 mt-0.5">JPG, PNG, PDF</p>
+                <p className="text-xs text-body font-medium">Drop certificate or click to browse</p>
+                <p className="text-xs text-muted mt-0.5">JPG, PNG, PDF</p>
               </div>
             )}
           </div>
@@ -203,7 +203,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
           {certFile && !verifyResult && (
             <button onClick={handleVerify} disabled={verifying}
               className={`w-full py-2.5 rounded-xl font-bold text-xs transition-all duration-200
-                ${verifying ? 'bg-white/5 text-slate-500 cursor-not-allowed' : 'bg-green-600 hover:bg-green-500 text-white active:scale-95'}`}>
+                ${verifying ? 'bg-navy-50 text-muted cursor-not-allowed' : 'bg-green-600 hover:bg-green-500 text-navy active:scale-95'}`}>
               {verifying ? (
                 <span className="flex items-center justify-center gap-2">
                   <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>
@@ -221,11 +221,11 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
               </p>
               
               {verifyResult.details && (
-                <div className="space-y-1 border-t border-white/5 pt-2 mt-2">
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-1">Verification Details:</p>
+                <div className="space-y-1 border-t border-navy-100 pt-2 mt-2">
+                  <p className="text-[10px] uppercase tracking-widest font-bold text-muted mb-1">Verification Details:</p>
                   {verifyResult.details.map((detail, idx) => (
                     <div key={idx} className="flex items-center gap-1.5 text-[10px]">
-                      <span className={detail.includes('FAILED') || detail.includes('MISMATCH') ? 'text-red-400' : 'text-slate-400'}>
+                      <span className={detail.includes('FAILED') || detail.includes('MISMATCH') ? 'text-red-400' : 'text-body'}>
                         {detail.includes('FAILED') || detail.includes('MISMATCH') ? '🔴' : '🔹'} {detail}
                       </span>
                     </div>
@@ -254,17 +254,17 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
 
       {/* Delete/Remove confirmation */}
       {showDeleteConfirm && (
-        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-gray-900 border border-white/10 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
-            <h3 className="text-lg font-bold text-white mb-2 text-center">Remove Course?</h3>
-            <p className="text-slate-400 text-sm text-center mb-6">
-              This will remove <span className="text-white font-semibold font-mono">{course.title}</span> from your learning dashboard.
+        <div className="fixed inset-0 bg-navy/40 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-white border border-navy-100 rounded-2xl p-6 max-w-sm w-full shadow-2xl">
+            <h3 className="text-lg font-bold text-navy mb-2 text-center">Remove Course?</h3>
+            <p className="text-body text-sm text-center mb-6">
+              This will remove <span className="text-navy font-semibold font-mono">{course.title}</span> from your learning dashboard.
             </p>
             <div className="flex gap-3">
-              <button onClick={() => setShowDeleteConfirm(false)} className="flex-1 py-2 rounded-xl bg-white/5 text-slate-400 hover:bg-white/10 font-semibold transition-all">Cancel</button>
+              <button onClick={() => setShowDeleteConfirm(false)} className="flex-1 py-2 rounded-xl bg-navy-50 text-body hover:bg-navy-100 font-semibold transition-all">Cancel</button>
               <button 
                 onClick={() => { onRemove(course.id); setShowDeleteConfirm(false) }}
-                className="flex-1 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-white font-semibold transition-all shadow-lg shadow-red-500/20"
+                className="flex-1 py-2 rounded-xl bg-red-600 hover:bg-red-500 text-navy font-semibold transition-all shadow-lg shadow-red-500/20"
                 >Remove</button>
             </div>
           </div>
@@ -275,7 +275,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
       {!isCompleted && (
         <button 
           onClick={() => setShowDeleteConfirm(true)}
-          className="mt-2 w-full py-1.5 text-[10px] uppercase font-bold tracking-widest text-slate-600 hover:text-red-400 transition-colors"
+          className="mt-2 w-full py-1.5 text-[10px] uppercase font-bold tracking-widest text-muted hover:text-red-400 transition-colors"
         >
           Remove course from dashboard
         </button>
@@ -307,9 +307,9 @@ export default function MyCourses() {
     return (
       <div className="min-h-screen flex items-center justify-center p-8">
         <div className="text-center max-w-md animate-fade-in space-y-5">
-          <div className="w-20 h-20 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center text-4xl mx-auto">🎓</div>
-          <h2 className="text-2xl font-extrabold text-white">No Courses Yet</h2>
-          <p className="text-slate-400">Enroll in courses to start your learning journey and fill your skill gaps</p>
+          <div className="w-20 h-20 bg-navy-50 border border-navy-100 rounded-2xl flex items-center justify-center text-4xl mx-auto">🎓</div>
+          <h2 className="text-2xl font-extrabold text-navy">No Courses Yet</h2>
+          <p className="text-body">Enroll in courses to start your learning journey and fill your skill gaps</p>
           <Link to="/courses" className="btn-primary">Browse Courses →</Link>
         </div>
       </div>
@@ -328,15 +328,15 @@ export default function MyCourses() {
         </div>
 
         {/* How it works */}
-        <div className="bg-blue-500/10 border border-blue-500/20 rounded-2xl p-4 mb-6 flex items-start gap-3">
+        <div className="bg-midblue/10 border border-midblue-200 rounded-2xl p-4 mb-6 flex items-start gap-3">
           <span className="text-xl flex-shrink-0">ℹ️</span>
           <div>
-            <p className="font-bold text-blue-300 text-sm mb-1">How course completion works</p>
-            <ol className="text-xs text-blue-300/70 space-y-0.5">
-              <li>1. Click <strong className="text-blue-300">"Start Course"</strong> to go to the platform and complete it</li>
-              <li>2. Download your <strong className="text-blue-300">completion certificate</strong> from the platform</li>
-              <li>3. Click <strong className="text-blue-300">"Submit Certificate"</strong> and upload it here for verification</li>
-              <li>4. Once verified, your progress updates to <strong className="text-blue-300">100% automatically</strong></li>
+            <p className="font-bold text-midblue text-sm mb-1">How course completion works</p>
+            <ol className="text-xs text-midblue/70 space-y-0.5">
+              <li>1. Click <strong className="text-midblue">"Start Course"</strong> to go to the platform and complete it</li>
+              <li>2. Download your <strong className="text-midblue">completion certificate</strong> from the platform</li>
+              <li>3. Click <strong className="text-midblue">"Submit Certificate"</strong> and upload it here for verification</li>
+              <li>4. Once verified, your progress updates to <strong className="text-midblue">100% automatically</strong></li>
             </ol>
           </div>
         </div>
@@ -351,8 +351,8 @@ export default function MyCourses() {
           ].map(stat => (
             <div key={stat.label} className="card">
               <div className={`w-10 h-10 bg-gradient-to-br ${stat.from} ${stat.to} rounded-xl flex items-center justify-center text-lg mb-3 shadow-lg`}>{stat.icon}</div>
-              <p className="text-2xl font-extrabold text-white">{stat.value}</p>
-              <p className="text-slate-500 text-xs mt-1">{stat.label}</p>
+              <p className="text-2xl font-extrabold text-navy">{stat.value}</p>
+              <p className="text-muted text-xs mt-1">{stat.label}</p>
             </div>
           ))}
         </div>
@@ -360,18 +360,18 @@ export default function MyCourses() {
         {/* Overall progress */}
         <div className="card mb-6">
           <div className="flex items-center justify-between mb-3">
-            <h3 className="font-bold text-white text-sm">Overall Learning Progress</h3>
-            <span className="text-xl font-extrabold text-blue-400">{avgProgress}%</span>
+            <h3 className="font-bold text-navy text-sm">Overall Learning Progress</h3>
+            <span className="text-xl font-extrabold text-midblue">{avgProgress}%</span>
           </div>
-          <div className="h-3 bg-white/5 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-blue-500 to-purple-500 rounded-full transition-all duration-1000" style={{ width:`${avgProgress}%` }} />
+          <div className="h-3 bg-navy-50 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-midblue to-emerald rounded-full transition-all duration-1000" style={{ width:`${avgProgress}%` }} />
           </div>
         </div>
 
         {/* Course sections */}
         {notStarted.length > 0 && (
           <div className="mb-8">
-            <h2 className="font-bold text-slate-400 mb-4 flex items-center gap-2 text-sm">
+            <h2 className="font-bold text-body mb-4 flex items-center gap-2 text-sm">
               <span className="w-2 h-2 bg-slate-500 rounded-full" /> Not Started ({notStarted.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -403,3 +403,8 @@ export default function MyCourses() {
     </div>
   )
 }
+
+
+
+
+

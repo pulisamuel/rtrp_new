@@ -7,64 +7,65 @@
   html { font-size: 14px; scroll-behavior: smooth; }
   body {
     font-family: 'Inter', system-ui, sans-serif;
-    background-color: #0f172a;
-    color: #f1f5f9;
+    background-color: #F4F7FF;
+    color: #4A5C7A;
     font-size: 0.875rem;
     -webkit-font-smoothing: antialiased;
   }
   /* Remove global h1/h2/h3 overrides — let Tailwind handle sizing */
   ::-webkit-scrollbar { width: 5px; }
-  ::-webkit-scrollbar-track { background: #0f172a; }
-  ::-webkit-scrollbar-thumb { background: #334155; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #475569; }
+  ::-webkit-scrollbar-track { background: #F4F7FF; }
+  ::-webkit-scrollbar-thumb { background: #C5CDDF; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #8A9ABF; }
 }
 
 @layer components {
-  /* ── Dark glass card ──────────────────────────────────────────────────── */
+  /* ── Light surface card ────────────────────────────────────────────────── */
   .card {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-5
-           transition-all duration-300;
+    @apply bg-white border border-navy-100 rounded-2xl p-5
+           shadow-sm transition-all duration-300;
   }
   .card-hover {
-    @apply hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-blue-500/10
+    @apply hover:bg-white hover:border-midblue-200 hover:shadow-lg hover:shadow-midblue-100/40
            hover:-translate-y-0.5;
   }
 
   /* ── Buttons ──────────────────────────────────────────────────────────── */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2
-           bg-gradient-to-r from-blue-600 to-purple-600
-           hover:from-blue-500 hover:to-purple-500
-           text-white font-semibold px-5 py-2.5 rounded-xl text-sm
-           shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50
+           bg-emerald text-white font-semibold px-5 py-2.5 rounded-xl text-sm
+           shadow-lg shadow-emerald/30 hover:shadow-emerald/50
            transition-all duration-200 hover:scale-[1.02] active:scale-95;
+  }
+  .btn-primary:hover {
+    background-color: #178260;
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2
-           bg-white/5 hover:bg-white/10 text-slate-200 font-semibold px-5 py-2.5
-           rounded-xl text-sm border border-white/10 hover:border-white/20
+           bg-white hover:bg-navy-50 text-navy font-semibold px-5 py-2.5
+           rounded-xl text-sm border border-navy-100 hover:border-midblue-200
            transition-all duration-200 active:scale-95;
   }
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2
-           text-slate-400 hover:text-white font-medium px-4 py-2
-           rounded-xl text-sm transition-all duration-200 hover:bg-white/5;
+           text-muted hover:text-navy font-medium px-4 py-2
+           rounded-xl text-sm transition-all duration-200 hover:bg-navy-50;
   }
 
   /* ── Input fields ─────────────────────────────────────────────────────── */
   .input-field {
     @apply w-full px-4 py-2.5 rounded-xl
-           bg-white/5 border border-white/10 text-white placeholder-slate-500
-           focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/40
+           bg-white border border-navy-100 text-navy placeholder-muted
+           focus:outline-none focus:ring-2 focus:ring-midblue/30 focus:border-midblue
            transition-all duration-200 text-sm;
   }
   select.input-field {
-    color-scheme: dark;
-    background-color: #1e293b;
+    color-scheme: light;
+    background-color: #FFFFFF;
   }
   select.input-field option {
-    background-color: #1e293b;
-    color: #f1f5f9;
+    background-color: #FFFFFF;
+    color: #1B2D5B;
     padding: 8px;
   }
 
@@ -85,16 +86,16 @@
     @apply mb-8;
   }
   .page-title {
-    @apply text-3xl font-extrabold text-white mb-1;
+    @apply text-3xl font-extrabold text-navy mb-1;
   }
   .page-subtitle {
-    @apply text-slate-400 text-sm;
+    @apply text-body text-sm;
   }
 
   /* ── Section label ────────────────────────────────────────────────────── */
   .section-label {
-    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-white/5 border border-white/10
-           rounded-full text-xs font-medium text-slate-300 mb-4;
+    @apply inline-flex items-center gap-2 px-3 py-1.5 bg-navy-50 border border-navy-100
+           rounded-full text-xs font-medium text-midblue mb-4;
   }
 }
 
@@ -132,7 +133,7 @@
 
 /* ── Shimmer ──────────────────────────────────────────────────────────────── */
 .shimmer {
-  background: linear-gradient(90deg,#1e293b 25%,#334155 50%,#1e293b 75%);
+  background: linear-gradient(90deg,#E8ECF4 25%,#C5CDDF 50%,#E8ECF4 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
 }
@@ -141,8 +142,8 @@
 /* ── Glow pulse ───────────────────────────────────────────────────────────── */
 .glow-pulse { animation: glowPulse 4s ease-in-out infinite alternate; }
 @keyframes glowPulse {
-  from { opacity:0.12; transform:scale(1); }
-  to   { opacity:0.25; transform:scale(1.08); }
+  from { opacity:0.08; transform:scale(1); }
+  to   { opacity:0.16; transform:scale(1.08); }
 }
 
 /* ── Toast ────────────────────────────────────────────────────────────────── */
@@ -154,11 +155,11 @@
 
 /* ── Card lift ────────────────────────────────────────────────────────────── */
 .card-lift { transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
-.card-lift:hover { transform:translateY(-3px); box-shadow:0 12px 32px -4px rgba(59,130,246,0.15); }
+.card-lift:hover { transform:translateY(-3px); box-shadow:0 12px 32px -4px rgba(42,92,143,0.12); }
 
 /* ── Gradient text ────────────────────────────────────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg,#60a5fa,#a78bfa);
+  background: linear-gradient(135deg,#2A5C8F,#1D9E75);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -170,8 +171,8 @@
 
 /* ── Sidebar nav active glow ──────────────────────────────────────────────── */
 .nav-active {
-  background: linear-gradient(135deg, rgba(37,99,235,0.3), rgba(124,58,237,0.3));
-  border: 1px solid rgba(99,102,241,0.3);
-  color: #fff;
-  box-shadow: 0 0 20px rgba(99,102,241,0.15);
+  background: linear-gradient(135deg, rgba(29,158,117,0.15), rgba(42,92,143,0.15));
+  border: 1px solid rgba(29,158,117,0.3);
+  color: #1B2D5B;
+  box-shadow: 0 0 20px rgba(29,158,117,0.08);
 }

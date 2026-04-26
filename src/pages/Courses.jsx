@@ -64,39 +64,39 @@ function CourseCard({ course, enrolled, onEnroll }) {
       <div className="card card-hover card-lift flex flex-col animate-fade-in">
         <div className="flex items-start justify-between mb-3">
           <div className="text-3xl">{course.image}</div>
-          <span className={`badge border ${levelColor[course.level] || 'bg-white/5 text-slate-400 border-white/10'}`}>{course.level}</span>
+          <span className={`badge border ${levelColor[course.level] || 'bg-navy-50 text-body border-navy-100'}`}>{course.level}</span>
         </div>
-        <h3 className="font-bold text-white mb-1 leading-tight text-sm">{course.title}</h3>
-        <p className="text-slate-500 text-xs mb-3 leading-relaxed">{course.description}</p>
-        <div className="flex items-center gap-3 text-xs text-slate-500 mb-3">
+        <h3 className="font-bold text-navy mb-1 leading-tight text-sm">{course.title}</h3>
+        <p className="text-muted text-xs mb-3 leading-relaxed">{course.description}</p>
+        <div className="flex items-center gap-3 text-xs text-muted mb-3">
           <span>🏫 {course.provider}</span>
           <span>⏱️ {course.duration}</span>
         </div>
         <div className="flex items-center gap-2 mb-4">
           <span className="text-yellow-400 text-xs">★</span>
-          <span className="font-semibold text-white text-xs">{course.rating}</span>
-          <span className="text-slate-500 text-xs">({(course.students/1000).toFixed(0)}k students)</span>
+          <span className="font-semibold text-navy text-xs">{course.rating}</span>
+          <span className="text-muted text-xs">({(course.students/1000).toFixed(0)}k students)</span>
         </div>
         <div className="mt-auto flex items-center justify-between">
-          <span className={`font-bold text-xs ${course.free ? 'text-green-400' : 'text-slate-300'}`}>{course.price}</span>
+          <span className={`font-bold text-xs ${course.free ? 'text-green-400' : 'text-body'}`}>{course.price}</span>
           <button onClick={() => setShowModal(true)}
-            className="text-xs bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 text-white px-4 py-1.5 rounded-lg font-semibold transition-all duration-200 active:scale-95">
+            className="text-xs bg-gradient-to-r from-midblue to-emerald hover:from-midblue hover:to-emerald text-navy px-4 py-1.5 rounded-lg font-semibold transition-all duration-200 active:scale-95">
             View & Enroll →
           </button>
         </div>
       </div>
 
       {showModal && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-gray-900 border border-white/10 rounded-2xl shadow-2xl max-w-md w-full p-6 animate-scale-in">
+        <div className="fixed inset-0 bg-navy/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in">
+          <div className="bg-white border border-navy-100 rounded-2xl shadow-2xl max-w-md w-full p-6 animate-scale-in">
             <div className="text-center mb-5">
               <div className="text-4xl mb-3">{course.image}</div>
-              <h3 className="text-lg font-extrabold text-white mb-1">{course.title}</h3>
-              <p className="text-slate-400 text-xs">{course.provider} · {course.duration} · {course.price}</p>
+              <h3 className="text-lg font-extrabold text-navy mb-1">{course.title}</h3>
+              <p className="text-body text-xs">{course.provider} · {course.duration} · {course.price}</p>
             </div>
-            <div className="bg-blue-500/10 border border-blue-500/20 rounded-xl p-4 mb-5">
-              <p className="text-xs font-semibold text-blue-300 mb-2">📋 What happens next:</p>
-              <ol className="text-xs text-blue-300/80 space-y-1.5">
+            <div className="bg-midblue/10 border border-midblue-200 rounded-xl p-4 mb-5">
+              <p className="text-xs font-semibold text-midblue mb-2">📋 What happens next:</p>
+              <ol className="text-xs text-midblue/80 space-y-1.5">
                 <li className="flex gap-2"><span className="font-bold">1.</span> We'll track this course in your learning dashboard</li>
                 <li className="flex gap-2"><span className="font-bold">2.</span> You'll be taken to <span className="font-semibold">{course.provider}</span> to complete enrollment</li>
                 <li className="flex gap-2"><span className="font-bold">3.</span> After finishing, upload your certificate here to verify</li>
@@ -159,14 +159,14 @@ export default function Courses() {
 
         {/* Role Selector */}
         <div className="card mb-5">
-          <p className="text-xs font-semibold text-slate-400 mb-3">Browse by Job Role</p>
+          <p className="text-xs font-semibold text-body mb-3">Browse by Job Role</p>
           <div className="flex flex-wrap gap-2">
             {Object.keys(COURSES_DB).map(role => (
               <button key={role} onClick={() => setSelectedRole(role)}
                 className={`px-3 py-1.5 rounded-xl text-xs font-medium transition-all duration-200
                   ${selectedRole === role
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md'
-                    : 'bg-white/5 text-slate-400 border border-white/8 hover:border-white/20 hover:text-white'}`}>
+                    ? 'bg-gradient-to-r from-midblue to-emerald text-navy shadow-md'
+                    : 'bg-navy-50 text-body border border-navy-100 hover:border-midblue-200 hover:text-navy'}`}>
                 {role}
               </button>
             ))}
@@ -182,8 +182,8 @@ export default function Courses() {
               <button key={f} onClick={() => setFilter(f)}
                 className={`px-3 py-2 rounded-xl text-xs font-medium transition-all duration-200
                   ${filter === f
-                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                    : 'bg-white/5 border border-white/8 text-slate-400 hover:border-white/20 hover:text-white'}`}>
+                    ? 'bg-gradient-to-r from-midblue to-emerald text-navy'
+                    : 'bg-navy-50 border border-navy-100 text-body hover:border-midblue-200 hover:text-navy'}`}>
                 {f}
               </button>
             ))}
@@ -207,7 +207,7 @@ export default function Courses() {
 
         {/* Toast */}
         {toast && (
-          <div className="fixed top-6 right-6 bg-green-600 text-white px-5 py-3 rounded-xl shadow-2xl font-semibold toast-enter z-50 flex items-center gap-2">
+          <div className="fixed top-6 right-6 bg-green-600 text-navy px-5 py-3 rounded-xl shadow-2xl font-semibold toast-enter z-50 flex items-center gap-2">
             ✅ {toast}
           </div>
         )}
@@ -223,7 +223,7 @@ export default function Courses() {
         ) : (
           <div className="text-center py-16">
             <div className="text-5xl mb-4">🔍</div>
-            <p className="text-slate-500">No courses found matching your search</p>
+            <p className="text-muted">No courses found matching your search</p>
           </div>
         )}
 
@@ -238,3 +238,8 @@ export default function Courses() {
     </div>
   )
 }
+
+
+
+
+

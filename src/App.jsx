@@ -19,10 +19,10 @@ function AppShell() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-slate-800 flex items-center justify-center">
-        <div className="text-center text-white space-y-4">
-          <div className="w-14 h-14 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center text-2xl font-extrabold mx-auto shadow-xl shadow-blue-500/30 animate-pulse">L</div>
-          <p className="text-sm font-semibold text-blue-300">Loading LetMeCheck...</p>
+      <div className="min-h-screen bg-pageBg flex items-center justify-center">
+        <div className="text-center text-navy space-y-4">
+          <div className="w-14 h-14 bg-emerald rounded-2xl flex items-center justify-center text-2xl font-extrabold mx-auto shadow-xl shadow-emerald/30 animate-pulse">L</div>
+          <p className="text-sm font-semibold text-midblue">Loading LetMeCheck...</p>
         </div>
       </div>
     )
@@ -31,10 +31,10 @@ function AppShell() {
   if (!isAuthenticated) return <Login />
 
   return (
-    <div className="flex min-h-screen bg-gray-950">
+    <div className="flex min-h-screen bg-pageBg">
       <Sidebar collapsed={sidebarCollapsed} onToggle={() => setSidebarCollapsed(c => !c)} />
       <main
-        className="flex-1 min-h-screen transition-all duration-300 bg-gradient-to-br from-gray-950 via-gray-900 to-slate-900"
+        className="flex-1 min-h-screen transition-all duration-300 bg-pageBg"
         style={{ marginLeft: sidebarCollapsed ? '72px' : '256px' }}
       >
         <Routes>
@@ -60,3 +60,9 @@ export default function App() {
     </AppProvider>
   )
 }
+
+
+
+
+
+

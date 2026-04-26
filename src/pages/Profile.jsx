@@ -42,7 +42,7 @@ export default function Profile() {
   return (
     <div className="page-wrapper animate-fade-in">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-purple-600/6 rounded-full blur-3xl" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-emerald/6 rounded-full blur-3xl" />
       </div>
 
       <div className="max-w-4xl mx-auto relative">
@@ -52,29 +52,29 @@ export default function Profile() {
         </div>
 
         {/* Profile Hero Card */}
-        <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-white/10 rounded-2xl p-6 mb-6">
+        <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/20 to-purple-600/20 border border-navy-100 rounded-2xl p-6 mb-6">
           <div className="absolute -top-10 -right-10 w-40 h-40 bg-blue-500/15 rounded-full blur-2xl" />
           <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-purple-500/15 rounded-full blur-2xl" />
           <div className="relative flex items-center gap-5">
-            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center text-3xl font-extrabold text-white border border-white/20 shadow-xl flex-shrink-0">
+            <div className="w-16 h-16 bg-gradient-to-br from-midblue to-emerald rounded-2xl flex items-center justify-center text-3xl font-extrabold text-navy border border-midblue-200 shadow-xl flex-shrink-0">
               {form.name ? form.name.charAt(0).toUpperCase() : '?'}
             </div>
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl font-extrabold text-white">{form.name || 'Your Name'}</h2>
-              <p className="text-blue-300/70 text-sm mt-0.5">{form.email || 'your@email.com'}</p>
-              <p className="text-slate-400 text-xs mt-1">
+              <h2 className="text-xl font-extrabold text-navy">{form.name || 'Your Name'}</h2>
+              <p className="text-midblue/70 text-sm mt-0.5">{form.email || 'your@email.com'}</p>
+              <p className="text-body text-xs mt-1">
                 {[form.college, form.year, form.graduation && `Class of ${form.graduation}`].filter(Boolean).join(' · ')}
               </p>
               {form.goal && (
-                <span className="inline-flex items-center gap-1 mt-2 bg-white/10 px-3 py-1 rounded-full text-xs font-medium text-white">
+                <span className="inline-flex items-center gap-1 mt-2 bg-navy-100 px-3 py-1 rounded-full text-xs font-medium text-navy">
                   🎯 {form.goal}
                 </span>
               )}
             </div>
             <div className="text-right flex-shrink-0">
-              <p className="text-slate-400 text-xs">Profile Complete</p>
-              <p className="text-3xl font-extrabold text-white">{Math.round((profileCompletion/6)*100)}%</p>
-              <div className="mt-1.5 w-20 h-1.5 bg-white/10 rounded-full overflow-hidden">
+              <p className="text-body text-xs">Profile Complete</p>
+              <p className="text-3xl font-extrabold text-navy">{Math.round((profileCompletion/6)*100)}%</p>
+              <div className="mt-1.5 w-20 h-1.5 bg-navy-100 rounded-full overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" style={{ width:`${(profileCompletion/6)*100}%` }} />
               </div>
             </div>
@@ -82,11 +82,11 @@ export default function Profile() {
         </div>
 
         {/* Tabs */}
-        <div className="flex gap-2 mb-5 bg-white/3 border border-white/8 p-1 rounded-xl">
+        <div className="flex gap-2 mb-5 bg-white/3 border border-navy-100 p-1 rounded-xl">
           {TABS.map(({ id, label, Icon }) => (
             <button key={id} onClick={() => setActiveTab(id)}
               className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-xs font-semibold transition-all duration-200
-                ${activeTab === id ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md' : 'text-slate-500 hover:text-white'}`}>
+                ${activeTab === id ? 'bg-gradient-to-r from-midblue to-emerald text-navy shadow-md' : 'text-muted hover:text-navy'}`}>
               <Icon className="w-3.5 h-3.5" />{label}
             </button>
           ))}
@@ -96,7 +96,7 @@ export default function Profile() {
         {activeTab === 'profile' && (
           <div className="card animate-fade-in space-y-6">
             <div className="flex items-center justify-between">
-              <h3 className="font-bold text-white text-base">Account Information</h3>
+              <h3 className="font-bold text-navy text-base">Account Information</h3>
               <div className="badge bg-green-500/10 text-green-400 border-green-500/20 px-3 py-1">Verified Profile</div>
             </div>
             
@@ -110,10 +110,10 @@ export default function Profile() {
                 { label: 'Career Objective', value: form.goal, icon: '🎯', fullWidth: true },
               ].map(({ label, value, icon, fullWidth }) => (
                 <div key={label} className={fullWidth ? 'md:col-span-2' : ''}>
-                  <p className="text-[10px] uppercase tracking-widest font-bold text-slate-500 mb-1">{label}</p>
-                  <div className="flex items-center gap-3 p-3.5 bg-white/3 border border-white/5 rounded-2xl group hover:border-white/10 transition-colors">
+                  <p className="text-[10px] uppercase tracking-widest font-bold text-muted mb-1">{label}</p>
+                  <div className="flex items-center gap-3 p-3.5 bg-white/3 border border-navy-100 rounded-2xl group hover:border-navy-100 transition-colors">
                     <span className="text-lg opacity-60 group-hover:opacity-100 transition-opacity">{icon}</span>
-                    <span className="font-semibold text-slate-200">{value || 'Not provided'}</span>
+                    <span className="font-semibold text-navy">{value || 'Not provided'}</span>
                   </div>
                 </div>
               ))}
@@ -155,23 +155,23 @@ export default function Profile() {
               ].map(stat => (
                 <div key={stat.label} className="card">
                   <div className={`w-10 h-10 bg-gradient-to-br ${stat.from} ${stat.to} rounded-xl flex items-center justify-center text-lg mb-3 shadow-lg`}>{stat.icon}</div>
-                  <p className="text-2xl font-extrabold text-white">{stat.value}</p>
-                  <p className="text-slate-500 text-xs mt-1">{stat.label}</p>
+                  <p className="text-2xl font-extrabold text-navy">{stat.value}</p>
+                  <p className="text-muted text-xs mt-1">{stat.label}</p>
                 </div>
               ))}
             </div>
 
             {analysisResult ? (
               <div className="card">
-                <h3 className="font-bold text-white mb-4 text-sm">Latest Analysis</h3>
+                <h3 className="font-bold text-navy mb-4 text-sm">Latest Analysis</h3>
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center text-white text-lg font-extrabold flex-shrink-0">
+                  <div className="w-14 h-14 bg-gradient-to-br from-midblue to-emerald rounded-2xl flex items-center justify-center text-navy text-lg font-extrabold flex-shrink-0">
                     {analysisResult.score}
                   </div>
                   <div>
-                    <p className="font-bold text-white">{analysisResult.jobRole}</p>
-                    <p className="text-slate-400 text-xs mt-0.5">Eligibility: <span className="font-semibold text-blue-400">{analysisResult.eligibility}</span></p>
-                    <p className="text-slate-400 text-xs">Skills: {analysisResult.foundRequired.length}/{analysisResult.foundRequired.length + analysisResult.missingRequired.length} found</p>
+                    <p className="font-bold text-navy">{analysisResult.jobRole}</p>
+                    <p className="text-body text-xs mt-0.5">Eligibility: <span className="font-semibold text-midblue">{analysisResult.eligibility}</span></p>
+                    <p className="text-body text-xs">Skills: {analysisResult.foundRequired.length}/{analysisResult.foundRequired.length + analysisResult.missingRequired.length} found</p>
                   </div>
                   <Link to="/dashboard" className="ml-auto btn-secondary text-xs">View Details →</Link>
                 </div>
@@ -179,8 +179,8 @@ export default function Profile() {
             ) : (
               <div className="card text-center py-10">
                 <div className="text-4xl mb-3">📄</div>
-                <p className="font-semibold text-white">No analysis yet</p>
-                <p className="text-slate-500 text-sm mt-1 mb-4">Upload your resume to see your stats</p>
+                <p className="font-semibold text-navy">No analysis yet</p>
+                <p className="text-muted text-sm mt-1 mb-4">Upload your resume to see your stats</p>
                 <Link to="/analyze" className="btn-primary text-xs">Analyze Resume →</Link>
               </div>
             )}
@@ -205,8 +205,8 @@ export default function Profile() {
                 <div key={a.title}
                   className={`card text-center transition-all duration-200 ${a.unlocked ? 'border-yellow-500/20 bg-yellow-500/5' : 'opacity-40 grayscale'}`}>
                   <div className="text-3xl mb-2">{a.icon}</div>
-                  <p className="font-bold text-white text-xs">{a.title}</p>
-                  <p className="text-slate-500 text-xs mt-1">{a.desc}</p>
+                  <p className="font-bold text-navy text-xs">{a.title}</p>
+                  <p className="text-muted text-xs mt-1">{a.desc}</p>
                   {a.unlocked && <span className="inline-block mt-2 badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Unlocked ✓</span>}
                 </div>
               ))}
@@ -217,3 +217,8 @@ export default function Profile() {
     </div>
   )
 }
+
+
+
+
+

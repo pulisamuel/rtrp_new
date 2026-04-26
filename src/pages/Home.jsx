@@ -11,7 +11,7 @@ import ResumeShowcase from '../components/ResumeShowcase'
 // ─── Reusable Glass Card ──────────────────────────────────────────────────────
 function GlassCard({ children, className = '', hover = true }) {
   return (
-    <div className={`bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl ${hover ? 'hover:bg-white/10 hover:border-white/20 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300' : ''} ${className}`}>
+    <div className={`bg-navy-50 backdrop-blur-xl border border-navy-100 rounded-2xl ${hover ? 'hover:bg-navy-100 hover:border-midblue-200 hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300' : ''} ${className}`}>
       {children}
     </div>
   )
@@ -22,7 +22,7 @@ function StatBadge({ value, label }) {
   return (
     <div className="text-center">
       <p className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{value}</p>
-      <p className="text-xs text-gray-400 mt-1">{label}</p>
+      <p className="text-xs text-body mt-1">{label}</p>
     </div>
   )
 }
@@ -32,10 +32,10 @@ function FeatureCard({ icon: Icon, title, desc, gradient }) {
   return (
     <GlassCard className="p-6 group cursor-default">
       <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${gradient} group-hover:scale-110 transition-transform duration-300`}>
-        <Icon className="w-6 h-6 text-white" />
+        <Icon className="w-6 h-6 text-navy" />
       </div>
-      <h3 className="font-bold text-white mb-2">{title}</h3>
-      <p className="text-sm text-gray-400 leading-relaxed">{desc}</p>
+      <h3 className="font-bold text-navy mb-2">{title}</h3>
+      <p className="text-sm text-body leading-relaxed">{desc}</p>
     </GlassCard>
   )
 }
@@ -45,14 +45,14 @@ function StepCard({ number, icon: Icon, title, desc }) {
   return (
     <div className="relative group">
       <GlassCard className="p-8 text-center">
-        <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center font-bold text-sm shadow-lg shadow-blue-500/50">
+        <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-gradient-to-br from-midblue to-emerald rounded-full flex items-center justify-center font-bold text-sm shadow-lg shadow-blue-500/50">
           {number}
         </div>
         <div className="w-16 h-16 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-          <Icon className="w-8 h-8 text-blue-400" />
+          <Icon className="w-8 h-8 text-midblue" />
         </div>
-        <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
-        <p className="text-sm text-gray-400 leading-relaxed">{desc}</p>
+        <h3 className="text-lg font-bold text-navy mb-2">{title}</h3>
+        <p className="text-sm text-body leading-relaxed">{desc}</p>
       </GlassCard>
     </div>
   )
@@ -68,12 +68,12 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-gray-800 to-slate-800 text-white overflow-x-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-pageBg to-white text-navy overflow-x-hidden">
 
       {/* ── Ambient Background Orbs ─────────────────────────────────────────── */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none select-none">
-        <div className="absolute -top-60 -right-60 w-[600px] h-[600px] bg-blue-600/15 rounded-full blur-3xl glow-pulse" />
-        <div className="absolute -bottom-60 -left-60 w-[600px] h-[600px] bg-purple-600/15 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '2s' }} />
+        <div className="absolute -top-60 -right-60 w-[600px] h-[600px] bg-midblue/15 rounded-full blur-3xl glow-pulse" />
+        <div className="absolute -bottom-60 -left-60 w-[600px] h-[600px] bg-emerald/15 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '2s' }} />
         <div className="absolute top-1/3 left-1/4 w-96 h-96 bg-cyan-500/8 rounded-full blur-3xl glow-pulse" style={{ animationDelay: '4s' }} />
       </div>
 
@@ -87,26 +87,26 @@ export default function Home() {
 
             {/* Welcome back banner */}
             {profile.name && analysisResult && (
-              <div className="inline-flex items-center gap-3 px-5 py-3 bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl animate-scale-in">
-                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-500 rounded-full flex items-center justify-center font-bold text-sm">
+              <div className="inline-flex items-center gap-3 px-5 py-3 bg-navy-50 backdrop-blur-xl border border-navy-100 rounded-2xl animate-scale-in">
+                <div className="w-8 h-8 bg-gradient-to-br from-midblue to-emerald rounded-full flex items-center justify-center font-bold text-sm">
                   {profile.name.charAt(0)}
                 </div>
-                <span className="text-sm text-gray-300">
-                  Welcome back, <span className="font-semibold text-white">{profile.name}</span>
+                <span className="text-sm text-navy">
+                  Welcome back, <span className="font-semibold text-navy">{profile.name}</span>
                 </span>
-                <span className="text-xs px-2 py-1 bg-blue-500/20 text-blue-300 rounded-lg font-semibold">
+                <span className="text-xs px-2 py-1 bg-midblue/20 text-midblue rounded-lg font-semibold">
                   Last score: {analysisResult.score}%
                 </span>
-                <Link to="/dashboard" className="text-xs text-blue-400 hover:text-blue-300 font-semibold transition-colors">
+                <Link to="/dashboard" className="text-xs text-midblue hover:text-midblue font-semibold transition-colors">
                   Dashboard →
                 </Link>
               </div>
             )}
 
             {/* AI Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 rounded-full animate-fade-in">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span className="text-sm font-medium text-blue-300">AI-Powered Career Intelligence</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-midblue-200 rounded-full animate-fade-in">
+              <Sparkles className="w-4 h-4 text-midblue" />
+              <span className="text-sm font-medium text-midblue">AI-Powered Career Intelligence</span>
             </div>
 
             {/* Main Heading */}
@@ -118,7 +118,7 @@ export default function Home() {
             </h1>
 
             {/* Subheading */}
-            <p className="text-2xl md:text-3xl font-semibold text-gray-200 max-w-3xl mx-auto leading-snug">
+            <p className="text-2xl md:text-3xl font-semibold text-navy max-w-3xl mx-auto leading-snug">
               AI-powered Resume Analyzer to{' '}
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 boost your ATS score
@@ -127,7 +127,7 @@ export default function Home() {
             </p>
 
             {/* Description */}
-            <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-body max-w-2xl mx-auto leading-relaxed">
               Get instant, actionable feedback on your resume. Discover what recruiters and ATS systems see — and fix it before they do.
             </p>
 
@@ -135,7 +135,7 @@ export default function Home() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <button
                 onClick={handleAnalyze}
-                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/60 active:scale-95"
+                className="group inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-midblue to-emerald hover:from-midblue hover:to-emerald rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-105 hover:shadow-blue-500/60 active:scale-95"
               >
                 <Sparkles className="w-5 h-5" />
                 Analyze Resume
@@ -144,7 +144,7 @@ export default function Home() {
               {analysisResult && (
                 <Link
                   to="/dashboard"
-                  className="inline-flex items-center gap-2 px-8 py-4 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-2xl font-semibold text-lg transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-8 py-4 bg-navy-50 hover:bg-navy-100 border border-navy-100 hover:border-midblue-200 rounded-2xl font-semibold text-lg transition-all duration-300"
                 >
                   <BarChart3 className="w-5 h-5" />
                   View Dashboard
@@ -153,7 +153,7 @@ export default function Home() {
             </div>
 
             {/* Trust Line */}
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+            <div className="flex items-center justify-center gap-2 text-sm text-muted">
               <Shield className="w-4 h-4" />
               <span>Your data is private and never stored on our servers</span>
             </div>
@@ -161,11 +161,11 @@ export default function Home() {
             {/* Stats Row */}
             <div className="flex flex-wrap items-center justify-center gap-8 pt-4">
               <StatBadge value="20+" label="Job Roles" />
-              <div className="w-px h-8 bg-white/10" />
+              <div className="w-px h-8 bg-navy-100" />
               <StatBadge value="50+" label="Curated Courses" />
-              <div className="w-px h-8 bg-white/10" />
+              <div className="w-px h-8 bg-navy-100" />
               <StatBadge value="100%" label="Private & Secure" />
-              <div className="w-px h-8 bg-white/10" />
+              <div className="w-px h-8 bg-navy-100" />
               <StatBadge value="AI" label="Powered Analysis" />
             </div>
           </div>
@@ -173,7 +173,7 @@ export default function Home() {
           {/* Scroll Indicator */}
           <button
             onClick={handleAnalyze}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-gray-500 hover:text-gray-300 transition-colors animate-bounce"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-muted hover:text-navy transition-colors animate-bounce"
           >
             <span className="text-xs">Scroll to analyze</span>
             <ChevronDown className="w-5 h-5" />
@@ -188,12 +188,12 @@ export default function Home() {
         <section className="px-6 py-24">
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4 animate-fade-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-navy-50 border border-navy-100 rounded-full">
                 <Zap className="w-4 h-4 text-yellow-400" />
-                <span className="text-sm font-medium text-gray-300">Simple Process</span>
+                <span className="text-sm font-medium text-navy">Simple Process</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold">How It Works</h2>
-              <p className="text-gray-400 max-w-xl mx-auto">Three steps to a better resume and more interview calls</p>
+              <p className="text-body max-w-xl mx-auto">Three steps to a better resume and more interview calls</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8 stagger-children">
@@ -230,12 +230,12 @@ export default function Home() {
         <section className="px-6 py-24">
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4 animate-fade-up">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 border border-white/10 rounded-full">
-                <Star className="w-4 h-4 text-purple-400" />
-                <span className="text-sm font-medium text-gray-300">Full Platform</span>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-navy-50 border border-navy-100 rounded-full">
+                <Star className="w-4 h-4 text-midblue" />
+                <span className="text-sm font-medium text-navy">Full Platform</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold">Everything You Need</h2>
-              <p className="text-gray-400 max-w-xl mx-auto">A complete career toolkit built for students and job seekers</p>
+              <p className="text-body max-w-xl mx-auto">A complete career toolkit built for students and job seekers</p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children">
@@ -277,10 +277,10 @@ export default function Home() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="group flex flex-col items-center gap-1 px-5 py-3 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
+                  className="group flex flex-col items-center gap-1 px-5 py-3 bg-navy-50 hover:bg-navy-100 border border-navy-100 hover:border-midblue-200 rounded-xl transition-all duration-200 hover:-translate-y-0.5 active:scale-95"
                 >
-                  <span className="text-sm font-semibold text-white">{item.label}</span>
-                  <span className="text-xs text-gray-500 group-hover:text-gray-400 transition-colors">{item.desc}</span>
+                  <span className="text-sm font-semibold text-navy">{item.label}</span>
+                  <span className="text-xs text-muted group-hover:text-body transition-colors">{item.desc}</span>
                 </Link>
               ))}
             </div>
@@ -292,9 +292,9 @@ export default function Home() {
         ══════════════════════════════════════════════════════════════════════ */}
         <section className="px-6 py-24">
           <div className="max-w-4xl mx-auto">
-            <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-xl border border-white/10 rounded-3xl p-12 text-center space-y-6">
+            <div className="relative overflow-hidden bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-xl border border-navy-100 rounded-3xl p-12 text-center space-y-6">
               {/* Background decoration */}
-              <div className="absolute -top-20 -right-20 w-64 h-64 bg-blue-500/20 rounded-full blur-3xl" />
+              <div className="absolute -top-20 -right-20 w-64 h-64 bg-midblue/20 rounded-full blur-3xl" />
               <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-500/20 rounded-full blur-3xl" />
 
               <div className="relative space-y-6">
@@ -305,18 +305,18 @@ export default function Home() {
                     dream job?
                   </span>
                 </h2>
-                <p className="text-gray-400 max-w-xl mx-auto">
+                <p className="text-body max-w-xl mx-auto">
                   Join thousands of students who improved their ATS score and got more interview calls.
                 </p>
                 <button
                   onClick={handleAnalyze}
-                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
+                  className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-midblue to-emerald hover:from-midblue hover:to-emerald rounded-2xl font-semibold text-lg shadow-2xl shadow-blue-500/40 transition-all duration-300 hover:scale-105 active:scale-95"
                 >
                   <Sparkles className="w-5 h-5" />
                   Analyze My Resume Now
                   <ArrowRight className="w-5 h-5" />
                 </button>
-                <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+                <div className="flex items-center justify-center gap-2 text-sm text-muted">
                   <Shield className="w-4 h-4" />
                   <span>Free · Private · No account required</span>
                 </div>
@@ -328,28 +328,28 @@ export default function Home() {
         {/* ══════════════════════════════════════════════════════════════════════
             FOOTER
         ══════════════════════════════════════════════════════════════════════ */}
-        <footer className="border-t border-white/10 px-6 py-12">
+        <footer className="border-t border-navy-100 px-6 py-12">
           <div className="max-w-6xl mx-auto">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               {/* Brand */}
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center font-extrabold text-lg shadow-lg">
+                <div className="w-9 h-9 bg-gradient-to-br from-midblue to-emerald rounded-xl flex items-center justify-center font-extrabold text-lg shadow-lg">
                   L
                 </div>
                 <div>
-                  <p className="font-bold text-white">LetMeCheck</p>
-                  <p className="text-xs text-gray-500">Career Guidance System</p>
+                  <p className="font-bold text-navy">LetMeCheck</p>
+                  <p className="text-xs text-muted">Career Guidance System</p>
                 </div>
               </div>
 
               {/* Center */}
               <div className="text-center">
-                <p className="text-sm text-gray-400">Built with AI · Designed for students</p>
-                <p className="text-xs text-gray-600 mt-1">© 2024 LetMeCheck. All rights reserved.</p>
+                <p className="text-sm text-body">Built with AI · Designed for students</p>
+                <p className="text-xs text-muted mt-1">© 2024 LetMeCheck. All rights reserved.</p>
               </div>
 
               {/* Privacy */}
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center gap-2 text-sm text-muted">
                 <Shield className="w-4 h-4" />
                 <span>100% Private & Secure</span>
               </div>
@@ -361,3 +361,8 @@ export default function Home() {
     </div>
   )
 }
+
+
+
+
+
