@@ -125,7 +125,7 @@ export default function Sidebar({ collapsed, onToggle }) {
           </div>
           <button
             onClick={logout}
-            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-muted hover:bg-red-500/10 hover:text-red-400 transition-all duration-200 border border-navy-100 hover:border-red-500/20"
+            className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold text-muted hover:bg-red-500/10 hover:text-red-700 transition-all duration-200 border border-navy-100 hover:border-red-500/20"
           >
             <LogOut className="w-3.5 h-3.5" />
             Sign Out
@@ -137,7 +137,7 @@ export default function Sidebar({ collapsed, onToggle }) {
           <button
             onClick={logout}
             title="Sign Out"
-            className="w-full flex items-center justify-center p-2.5 rounded-xl text-muted hover:bg-red-500/10 hover:text-red-400 transition-all duration-200"
+            className="w-full flex items-center justify-center p-2.5 rounded-xl text-muted hover:bg-red-500/10 hover:text-red-700 transition-all duration-200"
           >
             <LogOut className="w-4 h-4" />
           </button>
@@ -146,6 +146,8 @@ export default function Sidebar({ collapsed, onToggle }) {
     </aside>
   )
 }
+
+
 
 
 

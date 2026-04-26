@@ -54,9 +54,9 @@ function CourseCard({ course, enrolled, onEnroll }) {
   const [showModal, setShowModal] = useState(false)
 
   const levelColor = {
-    Beginner:     'bg-green-500/15 text-green-400 border-green-500/20',
-    Intermediate: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/20',
-    Advanced:     'bg-red-500/15 text-red-400 border-red-500/20',
+    Beginner:     'bg-green-500/15 text-green-700 border-green-500/20',
+    Intermediate: 'bg-yellow-500/15 text-amber-700 border-yellow-500/20',
+    Advanced:     'bg-red-500/15 text-red-700 border-red-500/20',
   }
 
   return (
@@ -73,12 +73,12 @@ function CourseCard({ course, enrolled, onEnroll }) {
           <span>⏱️ {course.duration}</span>
         </div>
         <div className="flex items-center gap-2 mb-4">
-          <span className="text-yellow-400 text-xs">★</span>
+          <span className="text-amber-700 text-xs">★</span>
           <span className="font-semibold text-navy text-xs">{course.rating}</span>
           <span className="text-muted text-xs">({(course.students/1000).toFixed(0)}k students)</span>
         </div>
         <div className="mt-auto flex items-center justify-between">
-          <span className={`font-bold text-xs ${course.free ? 'text-green-400' : 'text-body'}`}>{course.price}</span>
+          <span className={`font-bold text-xs ${course.free ? 'text-green-700' : 'text-body'}`}>{course.price}</span>
           <button onClick={() => setShowModal(true)}
             className="text-xs bg-gradient-to-r from-midblue to-emerald hover:from-midblue hover:to-emerald text-navy px-4 py-1.5 rounded-lg font-semibold transition-all duration-200 active:scale-95">
             View & Enroll →
@@ -195,10 +195,10 @@ export default function Courses() {
           <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-xl p-4 mb-5 flex items-start gap-3">
             <span className="text-xl">💡</span>
             <div>
-              <p className="font-semibold text-yellow-400 text-sm">Skills you need to learn for {selectedRole}:</p>
+              <p className="font-semibold text-amber-700 text-sm">Skills you need to learn for {selectedRole}:</p>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {analysisResult.missingRequired.map(skill => (
-                  <span key={skill} className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">{skill}</span>
+                  <span key={skill} className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">{skill}</span>
                 ))}
               </div>
             </div>
@@ -238,6 +238,8 @@ export default function Courses() {
     </div>
   )
 }
+
+
 
 
 

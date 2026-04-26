@@ -89,7 +89,7 @@ export default function ResumeShowcase() {
                     {/* Annotation Bubble */}
                     <div className="absolute -right-4 top-1/2 translate-x-full -translate-y-1/2 hidden xl:flex items-center gap-2">
                       <div className="h-0.5 w-8 bg-emerald-400 rounded-full"></div>
-                      <div className="bg-pageBg border border-emerald-500/30 text-emerald-400 text-xs px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex items-center gap-1.5 shadow-xl shadow-emerald-500/10">
+                      <div className="bg-pageBg border border-emerald-500/30 text-emerald-700 text-xs px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex items-center gap-1.5 shadow-xl shadow-emerald-500/10">
                         <CheckCircle2 className="w-3.5 h-3.5" /> Tailored to the role
                       </div>
                     </div>
@@ -147,7 +147,7 @@ export default function ResumeShowcase() {
                     {/* Annotation Bubble */}
                     <div className="absolute -right-4 top-[40%] translate-x-full -translate-y-1/2 hidden xl:flex items-center gap-2">
                       <div className="h-0.5 w-8 bg-emerald-400 rounded-full"></div>
-                      <div className="bg-pageBg border border-emerald-500/30 text-emerald-400 text-xs px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex items-center gap-1.5 shadow-xl shadow-emerald-500/10">
+                      <div className="bg-pageBg border border-emerald-500/30 text-emerald-700 text-xs px-3 py-1.5 rounded-lg whitespace-nowrap font-medium flex items-center gap-1.5 shadow-xl shadow-emerald-500/10">
                         <CheckCircle2 className="w-3.5 h-3.5" /> Use numbers & impact
                       </div>
                     </div>
@@ -183,7 +183,7 @@ export default function ResumeShowcase() {
                 
                 {/* Score Badge Overlay */}
                 <div className="absolute -top-4 -right-4 w-20 h-20 rounded-full bg-pageBg border-2 border-emerald-500/50 flex flex-col items-center justify-center shadow-[0_0_30px_rgba(16,185,129,0.4)] z-10 rotate-3">
-                  <span className="text-emerald-400 text-2xl font-black leading-none mt-1">92</span>
+                  <span className="text-emerald-700 text-2xl font-black leading-none mt-1">92</span>
                   <span className="text-[9px] text-body font-bold uppercase tracking-wider mt-1">AI Score</span>
                 </div>
               </div>
@@ -217,6 +217,8 @@ export default function ResumeShowcase() {
     </section>
   )
 }
+
+
 
 
 

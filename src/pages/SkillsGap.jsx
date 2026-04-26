@@ -20,12 +20,12 @@ function SkillGrid({ skills, type }) {
           <div className="flex items-start justify-between mb-3">
             <div className={`w-8 h-8 rounded-xl flex items-center justify-center
               ${item.found 
-                  ? (isReq ? 'bg-green-500/20 text-green-400' : 'bg-midblue/20 text-midblue')
+                  ? (isReq ? 'bg-green-500/20 text-green-700' : 'bg-midblue/20 text-midblue')
                   : (isReq ? 'bg-red-500/20 text-red-500' : 'bg-navy-50 text-body')}`}>
               {item.found ? <CheckCircle className="w-5 h-5"/> : <XCircle className="w-5 h-5"/>}
             </div>
             {isReq && !item.found && (
-              <span className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-red-500/20 text-red-400 rounded-full">
+              <span className="flex items-center gap-1 text-[10px] uppercase font-bold tracking-wider px-2 py-1 bg-red-500/20 text-red-700 rounded-full">
                 <AlertCircle className="w-3 h-3"/> Critical
               </span>
             )}
@@ -38,7 +38,7 @@ function SkillGrid({ skills, type }) {
           </p>
           {!item.found && (
             <Link to="/courses" className={`inline-flex items-center gap-2 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors
-              ${isReq ? 'bg-red-500/20 text-red-300 hover:bg-red-500/30' : 'bg-navy-50 text-body hover:bg-navy-100 hover:text-navy'}`}>
+              ${isReq ? 'bg-red-500/20 text-red-700 hover:bg-red-500/30' : 'bg-navy-50 text-body hover:bg-navy-100 hover:text-navy'}`}>
               Learn Now <ArrowLeft className="w-3 h-3 rotate-180"/>
             </Link>
           )}
@@ -106,11 +106,11 @@ export default function SkillsGap() {
               <span className="text-5xl font-black text-navy">{score}%</span>
             </div>
             <div className="mt-4 h-2 bg-navy-50 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full" style={{ width:`${score}%` }} />
+              <div className="h-full bg-gradient-to-r from-midblue to-emerald rounded-full" style={{ width:`${score}%` }} />
             </div>
           </div>
           <div className="card border-green-500/20 bg-green-500/5 relative overflow-hidden">
-            <p className="text-green-400/80 text-xs tracking-wider uppercase font-bold mb-2">Required Skills Met</p>
+            <p className="text-green-700/80 text-xs tracking-wider uppercase font-bold mb-2">Required Skills Met</p>
             <div className="flex items-baseline gap-2">
               <span className="text-5xl font-black text-navy">{requiredPct}%</span>
               <span className="text-muted font-medium">({foundRequired.length}/{roleData.requiredSkills.length})</span>
@@ -148,8 +148,8 @@ export default function SkillsGap() {
         <div className="mb-12">
           {activeTab === 'required' && (
             <div className="animate-fade-in">
-              <div className="mb-6 p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-200 text-sm flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 flex-shrink-0 text-orange-400"/>
+              <div className="mb-6 p-4 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-700 text-sm flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 flex-shrink-0 text-orange-700"/>
                 <p><strong>Note:</strong> These core skills are fundamental. Missing them significantly drops your chances of passing basic resume screenings for <span className="font-bold">{jobRole}</span>.</p>
               </div>
               <SkillGrid skills={allRequired} type="required" />
@@ -178,6 +178,8 @@ export default function SkillsGap() {
     </div>
   )
 }
+
+
 
 
 

@@ -63,9 +63,9 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
   const isCompleted = progress === 100
 
   const levelColor = {
-    Beginner:     'bg-green-500/15 text-green-400 border-green-500/20',
-    Intermediate: 'bg-yellow-500/15 text-yellow-400 border-yellow-500/20',
-    Advanced:     'bg-red-500/15 text-red-400 border-red-500/20',
+    Beginner:     'bg-green-500/15 text-green-700 border-green-500/20',
+    Intermediate: 'bg-yellow-500/15 text-amber-700 border-yellow-500/20',
+    Advanced:     'bg-red-500/15 text-red-700 border-red-500/20',
   }
   const progressColor = progress >= 75 ? 'from-green-500 to-emerald-500'
     : progress >= 50 ? 'from-blue-500 to-blue-600'
@@ -163,7 +163,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
         </a>
         {!isCompleted && (
           <button onClick={() => setShowCertUpload(!showCertUpload)}
-            className="flex-1 py-2 text-xs font-semibold bg-green-500/15 text-green-400 border border-green-500/20 rounded-xl hover:bg-green-500/25 transition-colors">
+            className="flex-1 py-2 text-xs font-semibold bg-green-500/15 text-green-700 border border-green-500/20 rounded-xl hover:bg-green-500/25 transition-colors">
             🏆 Submit Certificate
           </button>
         )}
@@ -171,8 +171,8 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
 
       {showCertUpload && !isCompleted && (
         <div className="border border-dashed border-green-500/30 rounded-xl p-4 bg-green-500/5 animate-fade-in">
-          <p className="text-xs font-bold text-green-400 mb-1">Upload Your Completion Certificate</p>
-          <p className="text-xs text-green-400/60 mb-3">Complete on <span className="font-semibold">{course.provider}</span>, download your certificate, then upload here.</p>
+          <p className="text-xs font-bold text-green-700 mb-1">Upload Your Completion Certificate</p>
+          <p className="text-xs text-green-700/60 mb-3">Complete on <span className="font-semibold">{course.provider}</span>, download your certificate, then upload here.</p>
           <div
             className={`border-2 border-dashed rounded-xl p-4 text-center cursor-pointer transition-all duration-200 mb-3
               ${dragOver ? 'border-green-400 bg-green-500/15' : certFile ? 'border-green-400/50 bg-green-500/8' : 'border-navy-100 hover:border-green-400/40'}`}
@@ -186,10 +186,10 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
               <div>
                 {certPreview && <img src={certPreview} alt="Certificate preview" className="w-full max-h-32 object-contain rounded-lg border border-green-500/20 bg-black/20 shadow-sm mb-2" />}
                 {!certPreview && <p className="text-xl mb-1">📄</p>}
-                <p className="font-semibold text-green-400 text-xs">{certFile.name}</p>
-                <p className="text-green-400/60 text-xs">{(certFile.size/1024).toFixed(1)} KB</p>
+                <p className="font-semibold text-green-700 text-xs">{certFile.name}</p>
+                <p className="text-green-700/60 text-xs">{(certFile.size/1024).toFixed(1)} KB</p>
                 <button onClick={() => { setCertFile(null); setCertPreview(null); setVerifyResult(null) }}
-                  className="mt-1 text-xs text-muted hover:text-red-400 transition-colors">Remove</button>
+                  className="mt-1 text-xs text-muted hover:text-red-700 transition-colors">Remove</button>
               </div>
             ) : (
               <div>
@@ -216,7 +216,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
           {verifyResult && (
             <div className={`mt-3 p-3 rounded-xl transition-all duration-300 animate-fade-in
               ${verifyResult.success ? 'bg-green-500/10 border border-green-500/20' : 'bg-red-500/10 border border-red-500/20'}`}>
-              <p className={`text-xs font-bold mb-2 ${verifyResult.success ? 'text-green-400' : 'text-red-400'}`}>
+              <p className={`text-xs font-bold mb-2 ${verifyResult.success ? 'text-green-700' : 'text-red-700'}`}>
                 {verifyResult.success ? '✅ ' : '❌ '}{verifyResult.message}
               </p>
               
@@ -225,7 +225,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
                   <p className="text-[10px] uppercase tracking-widest font-bold text-muted mb-1">Verification Details:</p>
                   {verifyResult.details.map((detail, idx) => (
                     <div key={idx} className="flex items-center gap-1.5 text-[10px]">
-                      <span className={detail.includes('FAILED') || detail.includes('MISMATCH') ? 'text-red-400' : 'text-body'}>
+                      <span className={detail.includes('FAILED') || detail.includes('MISMATCH') ? 'text-red-700' : 'text-body'}>
                         {detail.includes('FAILED') || detail.includes('MISMATCH') ? '🔴' : '🔹'} {detail}
                       </span>
                     </div>
@@ -240,12 +240,12 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
       {isCompleted && (
         <div className="p-4 bg-gradient-to-r from-green-600/20 to-emerald-600/20 border border-green-500/20 rounded-xl text-center animate-fade-in relative overflow-hidden group">
           <p className="text-2xl mb-1">🏆</p>
-          <p className="font-extrabold text-green-400 text-sm">Course Completed!</p>
-          <p className="text-green-400/60 text-xs mt-1">Certificate verified · Skill added to your profile</p>
+          <p className="font-extrabold text-green-700 text-sm">Course Completed!</p>
+          <p className="text-green-700/60 text-xs mt-1">Certificate verified · Skill added to your profile</p>
           
           <button 
             onClick={() => setShowDeleteConfirm(true)}
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-2 text-red-400 hover:bg-red-500/10 rounded-lg"
+            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity p-2 text-red-700 hover:bg-red-500/10 rounded-lg"
           >
             🗑️
           </button>
@@ -275,7 +275,7 @@ function CourseProgressCard({ course, progress, onVerify, onRemove }) {
       {!isCompleted && (
         <button 
           onClick={() => setShowDeleteConfirm(true)}
-          className="mt-2 w-full py-1.5 text-[10px] uppercase font-bold tracking-widest text-muted hover:text-red-400 transition-colors"
+          className="mt-2 w-full py-1.5 text-[10px] uppercase font-bold tracking-widest text-muted hover:text-red-700 transition-colors"
         >
           Remove course from dashboard
         </button>
@@ -381,7 +381,7 @@ export default function MyCourses() {
         )}
         {inProgress.length > 0 && (
           <div className="mb-8">
-            <h2 className="font-bold text-yellow-400 mb-4 flex items-center gap-2 text-sm">
+            <h2 className="font-bold text-amber-700 mb-4 flex items-center gap-2 text-sm">
               <span className="w-2 h-2 bg-yellow-500 rounded-full" /> In Progress ({inProgress.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -391,7 +391,7 @@ export default function MyCourses() {
         )}
         {completed.length > 0 && (
           <div className="mb-8">
-            <h2 className="font-bold text-green-400 mb-4 flex items-center gap-2 text-sm">
+            <h2 className="font-bold text-green-700 mb-4 flex items-center gap-2 text-sm">
               <span className="w-2 h-2 bg-green-500 rounded-full" /> Completed ({completed.length})
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -403,6 +403,8 @@ export default function MyCourses() {
     </div>
   )
 }
+
+
 
 
 

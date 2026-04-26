@@ -212,8 +212,8 @@ export default function Interview() {
                 </div>
               )}
             </div>
-            {roleError && <p className="text-red-400 text-xs mt-2">?? {roleError}</p>}
-            {jobRole && !roleError && <p className="text-green-400 text-xs mt-2 font-medium">? Role selected: <span className="font-bold">{jobRole}</span></p>}
+            {roleError && <p className="text-red-700 text-xs mt-2">?? {roleError}</p>}
+            {jobRole && !roleError && <p className="text-green-700 text-xs mt-2 font-medium">? Role selected: <span className="font-bold">{jobRole}</span></p>}
             <div className="mt-3 flex flex-wrap gap-2">
               <p className="text-xs text-muted w-full mb-1">Popular roles:</p>
               {["Frontend Developer","Data Scientist","DevOps Engineer","Product Manager","UI/UX Designer"].map(r => (
@@ -343,7 +343,7 @@ export default function Interview() {
                   </button>
                 )}
                 {showHint && (
-                  <div className="mt-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-xs text-yellow-300 animate-fade-in">
+                  <div className="mt-2 p-3 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-xs text-amber-700 animate-fade-in">
                     <span className="font-semibold">Hint: </span>{q.hint}
                   </div>
                 )}
@@ -379,13 +379,13 @@ export default function Interview() {
                 </div>
               </div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-3">
-                <p className="text-xs font-semibold text-green-400 mb-2">Key points to cover:</p>
+                <p className="text-xs font-semibold text-green-700 mb-2">Key points to cover:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {q.ideal.map(kw => {
                     const covered = answers[currentQ]?.toLowerCase().includes(kw.toLowerCase())
                     return (
                       <span key={kw} className={`text-xs px-2 py-0.5 rounded-full font-medium
-                        ${covered ? "bg-green-500/20 text-green-400" : "bg-red-500/15 text-red-400"}`}>
+                        ${covered ? "bg-green-500/20 text-green-700" : "bg-red-500/15 text-red-700"}`}>
                         {covered ? "?" : "?"} {kw}
                       </span>
                     )
@@ -439,7 +439,7 @@ export default function Interview() {
                 <div key={i} className="border border-navy-100 rounded-xl p-4">
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <p className="font-semibold text-navy text-xs flex-1">{q.q}</p>
-                    <span className={`badge flex-shrink-0 border ${scores[i]>=70?"bg-green-500/15 text-green-400 border-green-500/20":scores[i]>=45?"bg-yellow-500/15 text-yellow-400 border-yellow-500/20":"bg-red-500/15 text-red-400 border-red-500/20"}`}>
+                    <span className={`badge flex-shrink-0 border ${scores[i]>=70?"bg-green-500/15 text-green-700 border-green-500/20":scores[i]>=45?"bg-yellow-500/15 text-amber-700 border-yellow-500/20":"bg-red-500/15 text-red-700 border-red-500/20"}`}>
                       {scores[i]}/100
                     </span>
                   </div>
@@ -452,7 +452,7 @@ export default function Interview() {
                       const covered = answers[i]?.toLowerCase().includes(kw.toLowerCase())
                       return (
                         <span key={kw} className={`text-xs px-2 py-0.5 rounded-full font-medium
-                          ${covered?"bg-green-500/15 text-green-400":"bg-red-500/10 text-red-400"}`}>
+                          ${covered?"bg-green-500/15 text-green-700":"bg-red-500/10 text-red-700"}`}>
                           {covered?"?":"?"} {kw}
                         </span>
                       )
@@ -473,9 +473,9 @@ export default function Interview() {
             </p>
             <div className="mt-4 grid grid-cols-3 gap-3 text-center">
               {[
-                { val:scores.filter(s=>s>=70).length,  label:"Strong",  color:"text-green-400" },
-                { val:scores.filter(s=>s>=45&&s<70).length, label:"Decent", color:"text-yellow-400" },
-                { val:scores.filter(s=>s<45).length,   label:"Needs Work", color:"text-red-400" },
+                { val:scores.filter(s=>s>=70).length,  label:"Strong",  color:"text-green-700" },
+                { val:scores.filter(s=>s>=45&&s<70).length, label:"Decent", color:"text-amber-700" },
+                { val:scores.filter(s=>s<45).length,   label:"Needs Work", color:"text-red-700" },
               ].map(s => (
                 <div key={s.label} className="bg-navy-50 border border-navy-100 rounded-xl p-3">
                   <p className={`text-2xl font-extrabold ${s.color}`}>{s.val}</p>
@@ -498,6 +498,8 @@ export default function Interview() {
 
   return null
 }
+
+
 
 
 

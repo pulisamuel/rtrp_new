@@ -21,7 +21,7 @@ function GlassCard({ children, className = '', hover = true }) {
 function StatBadge({ value, label }) {
   return (
     <div className="text-center">
-      <p className="text-3xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{value}</p>
+      <p className="text-3xl font-extrabold bg-gradient-to-r from-midblue to-emerald bg-clip-text text-transparent">{value}</p>
       <p className="text-xs text-body mt-1">{label}</p>
     </div>
   )
@@ -111,7 +111,7 @@ export default function Home() {
 
             {/* Main Heading */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight leading-none">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-navy via-midblue to-emerald bg-clip-text text-transparent">
                 LetMeCheck
               </span>
               <span className="ml-3 text-7xl">🚀</span>
@@ -120,7 +120,7 @@ export default function Home() {
             {/* Subheading */}
             <p className="text-2xl md:text-3xl font-semibold text-navy max-w-3xl mx-auto leading-snug">
               AI-powered Resume Analyzer to{' '}
-              <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-midblue to-emerald bg-clip-text text-transparent">
                 boost your ATS score
               </span>{' '}
               instantly
@@ -189,7 +189,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto space-y-16">
             <div className="text-center space-y-4 animate-fade-up">
               <div className="inline-flex items-center gap-2 px-4 py-2 bg-navy-50 border border-navy-100 rounded-full">
-                <Zap className="w-4 h-4 text-yellow-400" />
+                <Zap className="w-4 h-4 text-amber-700" />
                 <span className="text-sm font-medium text-navy">Simple Process</span>
               </div>
               <h2 className="text-4xl md:text-5xl font-bold">How It Works</h2>
@@ -301,7 +301,7 @@ export default function Home() {
                 <div className="text-5xl">🎯</div>
                 <h2 className="text-4xl md:text-5xl font-bold">
                   Ready to land your{' '}
-                  <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-midblue to-emerald bg-clip-text text-transparent">
                     dream job?
                   </span>
                 </h2>
@@ -361,6 +361,8 @@ export default function Home() {
     </div>
   )
 }
+
+
 
 
 

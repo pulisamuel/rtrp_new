@@ -34,10 +34,10 @@ function ScoreRing({ score }) {
 }
 
 const ELIGIBILITY_STYLE = {
-  High:       'bg-green-500/20 text-green-400 border-green-500/30 shadow-lg shadow-green-500/10',
-  Medium:     'bg-yellow-500/20 text-yellow-400 border-yellow-500/30 shadow-lg shadow-yellow-500/10',
-  'Low-Medium':'bg-orange-500/20 text-orange-400 border-orange-500/30 shadow-lg shadow-orange-500/10',
-  Low:        'bg-red-500/20 text-red-400 border-red-500/30 shadow-lg shadow-red-500/10',
+  High:       'bg-green-500/20 text-green-700 border-green-500/30 shadow-lg shadow-green-500/10',
+  Medium:     'bg-yellow-500/20 text-amber-700 border-yellow-500/30 shadow-lg shadow-yellow-500/10',
+  'Low-Medium':'bg-orange-500/20 text-orange-700 border-orange-500/30 shadow-lg shadow-orange-500/10',
+  Low:        'bg-red-500/20 text-red-700 border-red-500/30 shadow-lg shadow-red-500/10',
 }
 
 // Generates a mock "Career Guidance" description
@@ -113,7 +113,7 @@ export default function Dashboard() {
               <Zap className="w-4 h-4 text-midblue" /> Intelligence Dashboard
             </div>
             <h1 className="text-5xl lg:text-6xl font-black text-navy tracking-tight leading-tight">
-              Analysis for <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">{jobRole}</span>
+              Analysis for <span className="bg-gradient-to-r from-midblue to-emerald bg-clip-text text-transparent">{jobRole}</span>
             </h1>
           </div>
           <Link to="/analyze" className="btn-secondary whitespace-nowrap h-fit">
@@ -206,26 +206,26 @@ export default function Dashboard() {
 
         {/* Skills Deep Dive Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <div className="bg-green-900/10 border border-green-500/20 rounded-3xl p-8 backdrop-blur-xl">
-            <h3 className="font-bold text-green-400 text-lg mb-6 flex items-center gap-3">
+          <div className="bg-green-500/10 border border-green-500/20 rounded-3xl p-8 backdrop-blur-xl">
+            <h3 className="font-bold text-green-700 text-lg mb-6 flex items-center gap-3">
               <div className="p-2 bg-green-500/20 rounded-lg"><CheckCircle className="w-5 h-5" /></div>
               Acquired Arsenal
             </h3>
             <div className="flex flex-wrap gap-2">
-              {foundRequired.map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-green-300 text-sm font-semibold hover:bg-green-500/20 transition-colors cursor-default">{s}</span>)}
-              {foundNiceToHave.slice(0,5).map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-sm font-semibold hover:bg-emerald-500/20 transition-colors cursor-default">{s}</span>)}
+              {foundRequired.map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-green-500/10 border border-green-500/20 text-green-700 text-sm font-semibold hover:bg-green-500/20 transition-colors cursor-default">{s}</span>)}
+              {foundNiceToHave.slice(0,5).map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-700 text-sm font-semibold hover:bg-emerald-500/20 transition-colors cursor-default">{s}</span>)}
               {foundRequired.length === 0 && <p className="text-muted text-sm font-medium">No strict matching skills discovered in your parsed text.</p>}
             </div>
           </div>
 
-          <div className="bg-orange-900/10 border border-orange-500/20 rounded-3xl p-8 backdrop-blur-xl">
-            <h3 className="font-bold text-orange-400 text-lg mb-6 flex items-center gap-3">
+          <div className="bg-orange-500/10 border border-orange-500/20 rounded-3xl p-8 backdrop-blur-xl">
+            <h3 className="font-bold text-orange-700 text-lg mb-6 flex items-center gap-3">
               <div className="p-2 bg-orange-500/20 rounded-lg"><XCircle className="w-5 h-5" /></div>
               Target Acumen
             </h3>
             <div className="flex flex-wrap gap-2">
-              {missingRequired.map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-300 text-sm font-semibold hover:bg-red-500/20 transition-colors cursor-default">{s}</span>)}
-              {missingNiceToHave.slice(0,4).map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-300 text-sm font-semibold hover:bg-orange-500/20 transition-colors cursor-default">{s}</span>)}
+              {missingRequired.map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-700 text-sm font-semibold hover:bg-red-500/20 transition-colors cursor-default">{s}</span>)}
+              {missingNiceToHave.slice(0,4).map(s => <span key={s} className="px-3 py-1.5 rounded-lg bg-orange-500/10 border border-orange-500/20 text-orange-700 text-sm font-semibold hover:bg-orange-500/20 transition-colors cursor-default">{s}</span>)}
             </div>
           </div>
         </div>
@@ -250,6 +250,8 @@ export default function Dashboard() {
     </div>
   )
 }
+
+
 
 
 

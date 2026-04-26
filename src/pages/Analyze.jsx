@@ -222,11 +222,11 @@ export default function Analyze() {
             {file ? (
               <div className="animate-scale-in space-y-3">
                 <div className="w-14 h-14 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                  <FileText className="w-7 h-7 text-green-400" />
+                  <FileText className="w-7 h-7 text-green-700" />
                 </div>
-                <p className="font-bold text-green-400">{file.name}</p>
+                <p className="font-bold text-green-700">{file.name}</p>
                 <p className="text-sm text-muted">{file.isStored ? 'Persisted Resume' : `${(file.size / 1024).toFixed(1)} KB`} · Ready to analyze</p>
-                <button className="text-xs text-muted hover:text-red-400 transition-colors"
+                <button className="text-xs text-muted hover:text-red-700 transition-colors"
                   onClick={e => { e.stopPropagation(); setFile(null); setStoredResume('', ''); setStep(1) }}>Change resume</button>
               </div>
             ) : (
@@ -283,7 +283,7 @@ export default function Analyze() {
                     className="w-full text-left px-4 py-2.5 text-sm hover:bg-navy-50 transition-colors border-b border-navy-100 last:border-0 flex items-center gap-2.5 text-body hover:text-navy">
                     <span className="text-base">{ROLE_ICONS[r] || '💼'}</span>
                     <span className="font-medium">{r}</span>
-                    <span className="ml-auto text-xs text-green-400 font-semibold bg-green-500/10 px-2 py-0.5 rounded-full">Supported</span>
+                    <span className="ml-auto text-xs text-green-700 font-semibold bg-green-500/10 px-2 py-0.5 rounded-full">Supported</span>
                   </button>
                 ))}
               </div>
@@ -291,7 +291,7 @@ export default function Analyze() {
           </div>
 
           {roleValidation && (
-            <div className={`mt-2 flex items-start gap-2 text-xs animate-fade-in ${roleValidation.valid ? 'text-green-400' : 'text-red-400'}`}>
+            <div className={`mt-2 flex items-start gap-2 text-xs animate-fade-in ${roleValidation.valid ? 'text-green-700' : 'text-red-700'}`}>
               {roleValidation.valid ? <CheckCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" /> : <XCircle className="w-3.5 h-3.5 mt-0.5 flex-shrink-0" />}
               <span className="font-medium">
                 {roleValidation.valid ? `Role confirmed: "${roleValidation.matched}"` : roleValidation.message}
@@ -302,7 +302,7 @@ export default function Analyze() {
 
         {/* Error */}
         {error && (
-          <div className="bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-3 rounded-xl mb-4 text-sm animate-fade-in flex items-start gap-2">
+          <div className="bg-red-500/10 border border-red-500/20 text-red-700 px-4 py-3 rounded-xl mb-4 text-sm animate-fade-in flex items-start gap-2">
             <XCircle className="w-4 h-4 mt-0.5 flex-shrink-0" />
             {error}
           </div>
@@ -345,6 +345,8 @@ export default function Analyze() {
     </div>
   )
 }
+
+
 
 
 

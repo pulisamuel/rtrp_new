@@ -75,7 +75,7 @@ export default function Profile() {
               <p className="text-body text-xs">Profile Complete</p>
               <p className="text-3xl font-extrabold text-navy">{Math.round((profileCompletion/6)*100)}%</p>
               <div className="mt-1.5 w-20 h-1.5 bg-navy-100 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-blue-400 to-purple-400 rounded-full" style={{ width:`${(profileCompletion/6)*100}%` }} />
+                <div className="h-full bg-gradient-to-r from-midblue to-emerald rounded-full" style={{ width:`${(profileCompletion/6)*100}%` }} />
               </div>
             </div>
           </div>
@@ -97,7 +97,7 @@ export default function Profile() {
           <div className="card animate-fade-in space-y-6">
             <div className="flex items-center justify-between">
               <h3 className="font-bold text-navy text-base">Account Information</h3>
-              <div className="badge bg-green-500/10 text-green-400 border-green-500/20 px-3 py-1">Verified Profile</div>
+              <div className="badge bg-green-500/10 text-green-700 border-green-500/20 px-3 py-1">Verified Profile</div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-8">
@@ -121,14 +121,14 @@ export default function Profile() {
 
             {profileCompletion < 6 && (
               <div className="mt-4 p-4 bg-yellow-500/10 border border-yellow-500/20 rounded-xl">
-                <p className="text-xs font-semibold text-yellow-400 mb-2">Complete your profile for better recommendations:</p>
+                <p className="text-xs font-semibold text-amber-700 mb-2">Complete your profile for better recommendations:</p>
                 <div className="flex flex-wrap gap-1.5">
-                  {!form.name && <span className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Name</span>}
-                  {!form.email && <span className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Email</span>}
-                  {!form.college && <span className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">College</span>}
-                  {!form.year && <span className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Year</span>}
-                  {!form.graduation && <span className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Graduation</span>}
-                  {!form.goal && <span className="badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Career Goal</span>}
+                  {!form.name && <span className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">Name</span>}
+                  {!form.email && <span className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">Email</span>}
+                  {!form.college && <span className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">College</span>}
+                  {!form.year && <span className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">Year</span>}
+                  {!form.graduation && <span className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">Graduation</span>}
+                  {!form.goal && <span className="badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">Career Goal</span>}
                 </div>
               </div>
             )}
@@ -207,7 +207,7 @@ export default function Profile() {
                   <div className="text-3xl mb-2">{a.icon}</div>
                   <p className="font-bold text-navy text-xs">{a.title}</p>
                   <p className="text-muted text-xs mt-1">{a.desc}</p>
-                  {a.unlocked && <span className="inline-block mt-2 badge bg-yellow-500/15 text-yellow-400 border border-yellow-500/20">Unlocked ✓</span>}
+                  {a.unlocked && <span className="inline-block mt-2 badge bg-yellow-500/15 text-amber-700 border border-yellow-500/20">Unlocked ✓</span>}
                 </div>
               ))}
             </div>
@@ -217,6 +217,8 @@ export default function Profile() {
     </div>
   )
 }
+
+
 
 
 

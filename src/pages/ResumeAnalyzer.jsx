@@ -88,7 +88,7 @@ export default function ResumeAnalyzer() {
 
             {/* Main Heading */}
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-extrabold tracking-tight">
-              <span className="bg-gradient-to-r from-white via-blue-100 to-purple-200 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-navy via-midblue to-emerald bg-clip-text text-transparent">
                 LetMeCheck
               </span>
               <span className="ml-4">🚀</span>
@@ -164,15 +164,15 @@ export default function ResumeAnalyzer() {
                 {file ? (
                   <div className="space-y-4 animate-fade-in">
                     <div className="w-16 h-16 bg-green-500/20 rounded-2xl flex items-center justify-center mx-auto">
-                      <FileText className="w-8 h-8 text-green-400" />
+                      <FileText className="w-8 h-8 text-green-700" />
                     </div>
                     <div>
-                      <p className="text-lg font-semibold text-green-400">{file.name}</p>
+                      <p className="text-lg font-semibold text-green-700">{file.name}</p>
                       <p className="text-sm text-body mt-1">{(file.size / 1024).toFixed(1)} KB</p>
                     </div>
                     <button
                       onClick={(e) => { e.stopPropagation(); setFile(null) }}
-                      className="text-sm text-body hover:text-red-400 transition-colors"
+                      className="text-sm text-body hover:text-red-700 transition-colors"
                     >
                       Remove file
                     </button>
@@ -298,14 +298,14 @@ export default function ResumeAnalyzer() {
                 <div className="bg-navy-50 backdrop-blur-xl border border-navy-100 rounded-2xl p-6 space-y-4 hover:bg-navy-100 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-green-500/20 rounded-xl flex items-center justify-center">
-                      <CheckCircle className="w-5 h-5 text-green-400" />
+                      <CheckCircle className="w-5 h-5 text-green-700" />
                     </div>
                     <h3 className="text-xl font-bold">Strengths</h3>
                   </div>
                   <ul className="space-y-3">
                     {results.strengths.map((item, i) => (
                       <li key={i} className="flex items-start gap-3 text-navy">
-                        <span className="text-green-400 mt-1">✓</span>
+                        <span className="text-green-700 mt-1">✓</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -316,14 +316,14 @@ export default function ResumeAnalyzer() {
                 <div className="bg-navy-50 backdrop-blur-xl border border-navy-100 rounded-2xl p-6 space-y-4 hover:bg-navy-100 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-red-500/20 rounded-xl flex items-center justify-center">
-                      <AlertCircle className="w-5 h-5 text-red-400" />
+                      <AlertCircle className="w-5 h-5 text-red-700" />
                     </div>
                     <h3 className="text-xl font-bold">Weaknesses</h3>
                   </div>
                   <ul className="space-y-3">
                     {results.weaknesses.map((item, i) => (
                       <li key={i} className="flex items-start gap-3 text-navy">
-                        <span className="text-red-400 mt-1">✗</span>
+                        <span className="text-red-700 mt-1">✗</span>
                         <span>{item}</span>
                       </li>
                     ))}
@@ -334,7 +334,7 @@ export default function ResumeAnalyzer() {
                 <div className="bg-navy-50 backdrop-blur-xl border border-navy-100 rounded-2xl p-6 space-y-4 hover:bg-navy-100 transition-all duration-300">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-yellow-500/20 rounded-xl flex items-center justify-center">
-                      <Target className="w-5 h-5 text-yellow-400" />
+                      <Target className="w-5 h-5 text-amber-700" />
                     </div>
                     <h3 className="text-xl font-bold">Missing Keywords</h3>
                   </div>
@@ -342,7 +342,7 @@ export default function ResumeAnalyzer() {
                     {results.missingKeywords.map((keyword, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-sm text-yellow-300 font-medium"
+                        className="px-3 py-1.5 bg-yellow-500/10 border border-yellow-500/20 rounded-lg text-sm text-amber-700 font-medium"
                       >
                         {keyword}
                       </span>
@@ -475,6 +475,8 @@ export default function ResumeAnalyzer() {
     </div>
   )
 }
+
+
 
 
 
