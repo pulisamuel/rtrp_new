@@ -1,45 +1,19 @@
 import React, { useState } from 'react'
 import { useApp } from '../context/AppContext'
 import { Sparkles, Shield, Eye, EyeOff } from 'lucide-react'
+import { JOB_ROLES } from '../utils/resumeAnalyzer'
 
 const FEATURES = [
   { icon: '🎯', text: 'ATS Resume Scoring' },
   { icon: '📊', text: 'Skills Gap Analysis' },
-  { icon: '📚', text: '50+ Curated Courses' },
+  { icon: '📚', text: '10+ Curated Courses' },
   { icon: '🎤', text: 'Mock Interview Practice' },
   { icon: '☁️', text: 'Data synced across devices' },
 ]
 
 const YEARS    = ['1st Year','2nd Year','3rd Year','4th Year','Graduate','Post Graduate']
 const GRAD_YRS = ['2024','2025','2026','2027','2028','2029','2030']
-const GOALS = [
-  // Software Engineering
-  'Frontend Developer','Backend Developer','Full Stack Developer',
-  'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
-  'Software Engineer','Embedded Systems Engineer','Game Developer',
-  // Data & AI
-  'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
-  'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
-  'Deep Learning Researcher','Quantitative Analyst',
-  // Cloud & DevOps
-  'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
-  'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
-  // Security
-  'Cybersecurity Analyst','Penetration Tester','Security Engineer',
-  'Information Security Manager','SOC Analyst',
-  // Design & Product
-  'UI/UX Designer','Product Designer','Interaction Designer',
-  'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
-  // Architecture & Leadership
-  'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
-  'Engineering Manager','Tech Lead',
-  // Other Tech Roles
-  'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
-  'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
-  'IT Consultant','Technical Writer','Developer Advocate',
-  // Non-Tech Adjacent
-  'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer',
-]
+const GOALS = Object.keys(JOB_ROLES)
 
 export default function Login() {
   const { loginUser, registerUser } = useApp()

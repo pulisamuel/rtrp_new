@@ -66,7 +66,7 @@ export default function SkillsGap() {
   }
 
   const { jobRole, foundRequired, missingRequired, foundNiceToHave, missingNiceToHave, score } = analysisResult
-  const roleData = JOB_ROLES[jobRole]
+  const roleData = JOB_ROLES[jobRole];
 
   if (!roleData) return null;
 

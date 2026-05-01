@@ -4,66 +4,55 @@ import { useApp } from '../context/AppContext'
 import { JOB_ROLES } from '../utils/resumeAnalyzer'
 import { Upload, FileText, Search, Sparkles, CheckCircle, XCircle, Shield, Zap, Target, X } from 'lucide-react'
 
-const ALL_ROLES = [
-  'Frontend Developer','Backend Developer','Full Stack Developer',
-  'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
-  'Software Engineer','Embedded Systems Engineer','Game Developer',
-  'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
-  'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
-  'Deep Learning Researcher','Quantitative Analyst',
-  'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
-  'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
-  'Cybersecurity Analyst','Penetration Tester','Security Engineer',
-  'Information Security Manager','SOC Analyst',
-  'UI/UX Designer','Product Designer','Interaction Designer',
-  'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
-  'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
-  'Engineering Manager','Tech Lead',
-  'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
-  'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
-  'IT Consultant','Technical Writer','Developer Advocate',
-  'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer',
-]
+const ALL_ROLES = Object.keys(JOB_ROLES)
 
 const ROLE_ICONS = {
-  'Frontend Developer':'⚛️','Backend Developer':'🔧','Full Stack Developer':'🔄',
-  'Data Scientist':'🤖','Data Analyst':'📊','DevOps Engineer':'☁️',
-  'UI/UX Designer':'🎨','Machine Learning Engineer':'🧠','Cybersecurity Analyst':'🔒',
-  'Product Manager':'📋','Cloud Engineer':'🌩️','Mobile Developer':'📱',
-  'QA Engineer':'🧪','Blockchain Developer':'⛓️','Site Reliability Engineer':'⚙️',
-  'Database Administrator':'🗄️','Business Analyst':'📈','Technical Writer':'✍️',
-  'Solutions Architect':'🏛️','AI Engineer':'🤖',
+  'Frontend Developer': '⚛️',
+  'Backend Developer': '🟢',
+  'Full Stack Developer': '🔄',
+  'Data Scientist': '🐍',
+  'Data Analyst': '📊',
+  'Machine Learning Engineer': '🔥',
+  'DevOps Engineer': '🐳',
+  'Cybersecurity Analyst': '🔒',
+  'UI/UX Designer': '🎨',
+  'Product Manager': '📋'
 }
 
 const ROLE_ALIASES = {
-  'software engineer':'Full Stack Developer','software developer':'Full Stack Developer',
-  'web developer':'Full Stack Developer','frontend engineer':'Frontend Developer',
-  'front end developer':'Frontend Developer','react developer':'Frontend Developer',
-  'backend engineer':'Backend Developer','back end developer':'Backend Developer',
-  'node developer':'Backend Developer','data engineer':'Data Scientist',
-  'ml engineer':'Machine Learning Engineer','cloud architect':'Solutions Architect',
-  'security engineer':'Cybersecurity Analyst','security analyst':'Cybersecurity Analyst',
-  'ios developer':'Mobile Developer','android developer':'Mobile Developer',
-  'react native developer':'Mobile Developer','flutter developer':'Mobile Developer',
-  'test engineer':'QA Engineer','automation engineer':'QA Engineer','qa analyst':'QA Engineer',
-  'dba':'Database Administrator','db admin':'Database Administrator',
-  'sre':'Site Reliability Engineer','reliability engineer':'Site Reliability Engineer',
-  'ba':'Business Analyst','scrum master':'Product Manager','agile coach':'Product Manager',
-  'ux designer':'UI/UX Designer','ui designer':'UI/UX Designer','product designer':'UI/UX Designer',
-  'web3 developer':'Blockchain Developer','smart contract developer':'Blockchain Developer',
-  'solidity developer':'Blockchain Developer','tech writer':'Technical Writer',
-  'enterprise architect':'Solutions Architect','devops':'DevOps Engineer','platform engineer':'DevOps Engineer',
+  'frontend': 'Frontend Developer',
+  'backend': 'Backend Developer',
+  'fullstack': 'Full Stack Developer',
+  'data science': 'Data Scientist',
+  'analytics': 'Data Analyst',
+  'ml engineer': 'Machine Learning Engineer',
+  'devops': 'DevOps Engineer',
+  'security': 'Cybersecurity Analyst',
+  'ux designer': 'UI/UX Designer',
+  'product manager': 'Product Manager'
 }
 
 function validateJobRole(input) {
   const trimmed = input.trim()
   if (!trimmed) return { valid: false, message: 'Please enter a job role' }
-  if (trimmed.length < 2) return { valid: false, message: 'Job role is too short' }
-  if (trimmed.length > 60) return { valid: false, message: 'Job role is too long' }
   
-  const exact = ALL_ROLES.find(r => r.toLowerCase() === trimmed.toLowerCase())
+  const lower = trimmed.toLowerCase()
+  
+  // 1. Exact match
+  const exact = ALL_ROLES.find(r => r.toLowerCase() === lower)
   if (exact) return { valid: true, matched: exact, message: '' }
   
+  // 2. Alias match
+  const aliasTarget = ROLE_ALIASES[lower]
+  if (aliasTarget) {
+    const matched = ALL_ROLES.find(r => r === aliasTarget)
+    if (matched) return { valid: true, matched, message: '', suggestion: matched }
+  }
+  
+  // 3. Partial match
+  const partial = ALL_ROLES.find(r => r.toLowerCase().includes(lower))
+  if (partial) return { valid: true, matched: partial, message: '', suggestion: partial }
+
   return { valid: false, matched: null, message: "Job role doesn't exist. Please select from the suggestions." }
 }
 
@@ -349,7 +338,7 @@ export default function Analyze() {
           {[
             { icon: Shield, label: 'Private & Secure', desc: 'Analyzed locally' },
             { icon: Zap, label: 'Instant Results', desc: 'Score in seconds' },
-            { icon: Target, label: '20 Job Roles', desc: 'Precise per role' },
+            { icon: Target, label: '10 Job Roles', desc: 'Precise per role' },
           ].map(({ icon: Icon, label, desc }) => (
             <div key={label} className="text-center p-4 bg-navy-50 border border-navy-100 rounded-xl">
               <Icon className="w-5 h-5 text-midblue mx-auto mb-2" />

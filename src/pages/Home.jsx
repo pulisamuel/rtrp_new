@@ -160,9 +160,9 @@ export default function Home() {
 
             {/* Stats Row */}
             <div className="flex flex-wrap items-center justify-center gap-8 pt-4">
-              <StatBadge value="20+" label="Job Roles" />
+              <StatBadge value="10+" label="Job Roles" />
               <div className="w-px h-8 bg-navy-100" />
-              <StatBadge value="50+" label="Curated Courses" />
+              <StatBadge value="10+" label="Curated Courses" />
               <div className="w-px h-8 bg-navy-100" />
               <StatBadge value="100%" label="Private & Secure" />
               <div className="w-px h-8 bg-navy-100" />
@@ -253,7 +253,7 @@ export default function Home() {
               />
               <FeatureCard
                 icon={BookOpen}
-                title="50+ Courses"
+                title="10+ Courses"
                 desc="Curated courses to fill your skill gaps and land your target role faster."
                 gradient="bg-gradient-to-br from-green-600 to-emerald-700"
               />
@@ -270,7 +270,7 @@ export default function Home() {
               {[
                 { to: '/dashboard', label: '📊 Dashboard', desc: 'View your analysis' },
                 { to: '/skills', label: '🎯 Skills Gap', desc: 'Find what to learn' },
-                { to: '/courses', label: '📚 Courses', desc: 'Browse 50+ courses' },
+                { to: '/courses', label: '📚 Courses', desc: 'Browse 10+ courses' },
                 { to: '/interview', label: '🎤 Mock Interview', desc: 'Practice questions' },
                 { to: '/profile', label: '👤 Profile', desc: 'Manage your info' },
               ].map((item) => (

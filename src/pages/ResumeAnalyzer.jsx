@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Upload, FileText, Sparkles, CheckCircle, AlertCircle, TrendingUp, Target, Zap, Shield, ArrowRight, Download } from 'lucide-react'
+import { JOB_ROLES } from '../utils/resumeAnalyzer'
 
 export default function ResumeAnalyzer() {
   const [file, setFile] = useState(null)
@@ -205,26 +206,7 @@ export default function ResumeAnalyzer() {
                   autoComplete="off"
                 />
                 <datalist id="career-goals-list">
-                  {[
-                    'Frontend Developer','Backend Developer','Full Stack Developer',
-                    'Mobile App Developer (Android)','Mobile App Developer (iOS)','React Native Developer',
-                    'Software Engineer','Embedded Systems Engineer','Game Developer',
-                    'Data Scientist','Data Analyst','Data Engineer','Business Intelligence Analyst',
-                    'Machine Learning Engineer','AI Engineer','NLP Engineer','Computer Vision Engineer',
-                    'Deep Learning Researcher','Quantitative Analyst',
-                    'DevOps Engineer','Cloud Engineer','Site Reliability Engineer (SRE)',
-                    'Platform Engineer','Infrastructure Engineer','Kubernetes Engineer',
-                    'Cybersecurity Analyst','Penetration Tester','Security Engineer',
-                    'Information Security Manager','SOC Analyst',
-                    'UI/UX Designer','Product Designer','Interaction Designer',
-                    'Product Manager','Technical Product Manager','Scrum Master','Agile Coach',
-                    'Solutions Architect','Enterprise Architect','Chief Technology Officer (CTO)',
-                    'Engineering Manager','Tech Lead',
-                    'QA Engineer','Automation Test Engineer','Blockchain Developer','Smart Contract Developer',
-                    'AR/VR Developer','Database Administrator','Network Engineer','System Administrator',
-                    'IT Consultant','Technical Writer','Developer Advocate',
-                    'Data Journalist','EdTech Developer','HealthTech Engineer','FinTech Developer'
-                  ].map(g => <option key={g} value={g} />)}
+                  {Object.keys(JOB_ROLES).map(g => <option key={g} value={g} />)}
                 </datalist>
               </div>
 

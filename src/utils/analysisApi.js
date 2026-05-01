@@ -58,7 +58,7 @@ export async function analyzeResumeViaAPI(resumeText, jobRole) {
   const result = analyzeResume(resumeText, jobRole)
 
   if (!result) {
-    throw new Error(`Job role "${jobRole}" is not supported. Please select from the 20 supported roles.`)
+    throw new Error(`Job role "${jobRole}" is not supported. Please select from the 56+ supported roles.`)
   }
 
   return { result, source: 'client' }
