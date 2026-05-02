@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { Upload, FileText, Sparkles, CheckCircle, AlertCircle, TrendingUp, Target, Zap, Shield, ArrowRight, Download } from 'lucide-react'
-import { JOB_ROLES } from '../utils/resumeAnalyzer'
+import { JOB_ROLES, extractTextFromPDF, analyzeResume } from '../utils/resumeAnalyzer'
 
 export default function ResumeAnalyzer() {
   const [file, setFile] = useState(null)
@@ -28,38 +28,41 @@ export default function ResumeAnalyzer() {
 
     setAnalyzing(true)
     
-    // Simulate analysis (replace with your actual API call)
-    setTimeout(() => {
-      setResults({
-        score: 78,
-        strengths: [
-          'Strong technical skills section',
-          'Clear work experience timeline',
-          'Quantified achievements',
-          'Relevant keywords present'
-        ],
-        weaknesses: [
-          'Missing action verbs in some descriptions',
-          'Inconsistent formatting',
-          'Could add more metrics'
-        ],
-        missingKeywords: [
-          'React', 'TypeScript', 'AWS', 'CI/CD', 'Agile', 'REST APIs'
-        ],
-        suggestions: [
-          'Add more quantifiable results (e.g., "Increased performance by 40%")',
-          'Use stronger action verbs like "Spearheaded", "Architected", "Optimized"',
-          'Include relevant certifications if you have any',
-          'Tailor your resume to match the job description keywords'
-        ]
-      })
-      setAnalyzing(false)
+    try {
+      // 1. Extract text
+      const text = await extractTextFromPDF(file)
+      if (!text) {
+        throw new Error('Could not read PDF. Make sure it is a text-based PDF.')
+      }
+
+      // 2. Run analysis
+      const analysis = analyzeResume(text, jobDesc || 'General Role')
       
+      // 3. Map to UI structure
+      setResults({
+        score: analysis.score,
+        strengths: analysis.foundRequired.length > 0 
+          ? analysis.foundRequired.slice(0, 4).map(s => `Detected strong skill: ${s}`)
+          : ['Good overall structure', 'Readable format'],
+        weaknesses: analysis.missingRequired.length > 0
+          ? analysis.missingRequired.slice(0, 3).map(s => `Missing critical skill: ${s}`)
+          : ['Consider adding more metrics', 'Use more action verbs'],
+        missingKeywords: analysis.missingRequired,
+        suggestions: analysis.recommendations.length > 0 
+          ? analysis.recommendations 
+          : ['Tailor your resume for specific job descriptions', 'Highlight your achievements with numbers']
+      })
+
       // Smooth scroll to results
       setTimeout(() => {
         resultsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
       }, 100)
-    }, 3000)
+    } catch (err) {
+      console.error('Analysis error:', err)
+      alert(err.message || 'Analysis failed. Please try a different PDF.')
+    } finally {
+      setAnalyzing(false)
+    }
   }
 
   const handleDrop = (e) => {

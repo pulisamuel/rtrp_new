@@ -78,6 +78,47 @@ export const JOB_ROLES = {
     minExperienceYears: 2,
     description: 'Define and drive product vision and strategy',
   },
+  'Mobile Developer': {
+    requiredSkills: ['React Native', 'Flutter', 'Swift', 'Kotlin', 'Mobile UI', 'Git', 'REST APIs', 'App Store Deployment'],
+    niceToHave: ['Objective-C', 'Java', 'Firebase', 'GraphQL', 'Redux', 'Native Modules', 'Push Notifications'],
+    experienceKeywords: ['mobile', 'android', 'ios', 'react native', 'flutter', 'swift', 'kotlin', 'app developer'],
+    minExperienceYears: 1,
+    description: 'Build native and cross-platform mobile applications',
+  },
+  'Cloud Engineer': {
+    requiredSkills: ['AWS', 'Azure', 'GCP', 'Terraform', 'Docker', 'Kubernetes', 'Cloud Security', 'Networking', 'Serverless'],
+    niceToHave: ['Python', 'Go', 'Bash', 'Jenkins', 'Monitoring', 'FinOps', 'IAM', 'VPC'],
+    experienceKeywords: ['cloud', 'aws', 'azure', 'google cloud', 'infrastructure', 'serverless', 'cloud engineer'],
+    minExperienceYears: 2,
+    description: 'Design and manage scalable cloud infrastructure',
+  },
+  'AI Engineer': {
+    requiredSkills: ['Python', 'LLMs', 'Prompt Engineering', 'LangChain', 'PyTorch', 'TensorFlow', 'NLP', 'API Integration'],
+    niceToHave: ['OpenAI SDK', 'Vector Databases', 'HuggingFace', 'Fine-tuning', 'Deployment', 'MLOps', 'Vector Search'],
+    experienceKeywords: ['ai', 'artificial intelligence', 'llm', 'generative ai', 'gpt', 'nlp', 'ai engineer'],
+    minExperienceYears: 1,
+    description: 'Build and integrate AI/LLM powered applications',
+  },
+}
+
+// Role mapping for aliases
+export const ROLE_MAPPING = {
+  'frontend': 'Frontend Developer',
+  'backend': 'Backend Developer',
+  'fullstack': 'Full Stack Developer',
+  'data science': 'Data Scientist',
+  'analytics': 'Data Analyst',
+  'ml engineer': 'Machine Learning Engineer',
+  'devops': 'DevOps Engineer',
+  'security': 'Cybersecurity Analyst',
+  'ux designer': 'UI/UX Designer',
+  'product manager': 'Product Manager',
+  'mobile': 'Mobile Developer',
+  'ios': 'Mobile Developer',
+  'android': 'Mobile Developer',
+  'cloud': 'Cloud Engineer',
+  'ai': 'AI Engineer',
+  'llm': 'AI Engineer',
 }
 
 // Courses database
@@ -114,6 +155,15 @@ export const COURSES_DB = {
   'Product Manager': [
     { id: 'pm1', title: 'Product Management Fundamentals', provider: 'Coursera', duration: '25 hours', level: 'Beginner', rating: 4.7, students: 90000, skill: 'Product Strategy', free: false, price: '$49/mo', image: '📋', description: 'PM basics.' },
   ],
+  'Mobile Developer': [
+    { id: 'mob1', title: 'React Native - The Practical Guide', provider: 'Udemy', duration: '32 hours', level: 'Intermediate', rating: 4.8, students: 85000, skill: 'React Native', free: false, price: '$14.99', image: '📱', description: 'Build iOS and Android apps.' },
+  ],
+  'Cloud Engineer': [
+    { id: 'cld1', title: 'AWS Certified Solutions Architect', provider: 'Udemy', duration: '25 hours', level: 'Intermediate', rating: 4.8, students: 300000, skill: 'AWS', free: false, price: '$14.99', image: '☁️', description: 'Master AWS Cloud.' },
+  ],
+  'AI Engineer': [
+    { id: 'ai1', title: 'Generative AI with LLMs', provider: 'Coursera', duration: '35 hours', level: 'Intermediate', rating: 4.9, students: 120000, skill: 'LLMs', free: false, price: '$49/mo', image: '🤖', description: 'Master Large Language Models.' },
+  ],
 }
 
 // ── Robust Skill Matching Helper ──────────────────────────────────────────────
@@ -149,9 +199,15 @@ function isSkillFound(text, skill) {
     'html': ['html5'],
     'css': ['css3'],
     'github': ['git'],
-    'ci/cd': ['cicd', 'jenkins', 'pipeline'],
-    'docker': ['containerization'],
-    'kubernetes': ['k8s'],
+    'ci/cd': ['cicd', 'jenkins', 'pipeline', 'github actions', 'gitlab ci'],
+    'docker': ['containerization', 'containers'],
+    'kubernetes': ['k8s', 'orchestration'],
+    'machine learning': ['ml', 'supervised learning', 'unsupervised learning', 'modeling'],
+    'deep learning': ['neural networks', 'cnn', 'rnn', 'transformers'],
+    'statistics': ['probability', 'inference', 'hypothesis testing'],
+    'data analysis': ['eda', 'cleaning data', 'wrangling'],
+    'git': ['github', 'gitlab', 'version control', 'bitbucket'],
+    'responsive design': ['mobile first', 'media queries', 'flexbox', 'css grid'],
   };
   
   const skillAliases = aliases[s] || [];
